@@ -1,0 +1,47 @@
+body {
+    color: #E9EAEC;
+    background-color: #333652;
+}
+
+h1 {
+    color: #90adc6;
+    font-size: 3em;
+}
+
+header {
+    background-color: #e9eaec;
+}
+
+header p {
+    color: #333652;
+    font-size: 1.5em;
+}
+
+h1, p, .news h3 {
+    text-align: center;
+}
+
+h3 {
+    color: #FAD02C;
+}
+
+h3 em {
+    font-size: 0.5em;
+}
+.news {
+    padding-top: 2em;
+}
+
+.news h3 {
+    font-size: 2.2em;
+}
+
+.news p {
+    color: #333652;
+    background-color: #e9eaec;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.5em;
+    text-align: left;
+}
