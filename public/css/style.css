@@ -45,3 +45,15 @@ h3 em {
     padding: 0.5em;
     text-align: left;
 }
+
+.commentaires {
+    font-size: 1.2em;
+    max-width: 60%;
+    margin: auto;
+    background-color: #222538;
+    color: #FAD02C;
+}
+
+.firstP {
+    color: #e9eaec;
+}
