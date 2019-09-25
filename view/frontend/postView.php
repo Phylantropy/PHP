@@ -46,4 +46,16 @@ while ($comment = $comments->fetch() ) {
 
 <?php $content = ob_get_clean(); ?>
 
+<?php
+ob_start();
+
+foreach ($pagesNumber as $value) {
+?>
+    <a href="index.php?action=post&amp;id=<?= $post['id']; ?>&amp;page=<?php echo $value ?>"><?php echo $value ?></a>
+<?php
+}
+unset($value);
+?>
+<?php $pages = ob_get_clean(); ?>
+
 <?php require 'view/frontend/template.php'; ?>

@@ -7,9 +7,6 @@
     </head>
 
     <body>
-        <?php echo $content ?>
-        <div id="pages">
-            Pages: <?php echo $pages ?>
-        </div>
+        <?= $content ?>
     </body>
 </html>

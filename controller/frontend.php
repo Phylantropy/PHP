@@ -2,21 +2,31 @@
 
 require_once 'model/PostManager.php';
 require_once 'model/CommentManager.php';
+require_once 'model/Pagination.php';
 
-function listPosts() {
+function listPosts($page) {
     $postManager = new PostManager();
-    $posts = $postManager->getPosts();
+    $pagination = new Pagination();
+
+    $postManager->setPostView(3);
+    $posts = $postManager->getPosts($page);
+    $pagination->setPostView(3);
+    $pagesNumber = $pagination->getArticlesCount();
 
     require 'view/frontend/listPostsView.php';
 }
 
 
-function post() {
+function post($id, $page) {
     $postManager = new PostManager();
     $commentManager = new CommentManager();
+    $pagination = new Pagination();
 
-    $post = $postManager->getPost($_GET['id']);
-    $comments = $commentManager->getComments($_GET['id']);
+    $post = $postManager->getPost($id);
+    $commentManager->setPostView(4);
+    $comments = $commentManager->getComments($id, $page);
+    $pagination->setPostView(4);
+    $pagesNumber = $pagination->getCommentsCount($id);
 
     require 'view/frontend/postView.php';
 }

@@ -3,14 +3,25 @@
 require_once 'model/Manager.php';
 
 class CommentManager extends Manager {
-    public function getComments($postId) {
+
+    public function getComments($postId, $firstPost) {
+        if ($firstPost > 0) {
+            $firstPost = ($firstPost * $this->postView) - $this->postView;
+        }
+    
         $db = $this->dbConnect();
-        $comments = $db->prepare('SELECT id, author, content, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\') AS comment_date_fr FROM comments WHERE post_id = ? ORDER BY comment_date DESC');
-        $comments->execute(array($postId) );
+        $comments = $db->prepare('SELECT id, author, content, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\') AS comment_date_fr FROM comments WHERE post_id = ? ORDER BY comment_date DESC LIMIT ?, ?');
+        $comments->bindParam(1, $postId, PDO::PARAM_INT);
+        $comments->bindParam(2, $firstPost, PDO::PARAM_INT);
+        $comments->bindParam(3, $this->postView, PDO::PARAM_INT);
+        $comments->execute();
 
-        // var_dump($comments->fetchAll() );
-
-        return $comments;
+        if ($comments === false) {
+            throw new Exception('Impossible de récupérer les billets');
+        }
+        else {
+            return $comments;
+        }
     }
 
     public function postComment($postId, $author, $comment) {

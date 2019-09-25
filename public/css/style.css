@@ -8,6 +8,12 @@ h1 {
     font-size: 3em;
 }
 
+a:visited {
+    color: #FAD02C;
+}
+
+
+
 header {
     background-color: #e9eaec;
 }
@@ -30,6 +36,10 @@ h3 em {
 }
 .news {
     padding-top: 2em;
+}
+
+.news a:visited {
+    color: #470ea8;;
 }
 
 .news h3 {
