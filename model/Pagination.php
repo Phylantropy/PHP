@@ -1,13 +1,7 @@
 <?php
 
 class Pagination extends Manager {
-    // private $pages = 0;
-
-    // public function __construct( $_nbrPage, $_actualPage ) {
-    //     $this->pages = $_nbrPages;
-    //     $this->actualPage = $_actualPage;
-    // }
-
+    
     private function getArticlesPagesCount() {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT COUNT(*) FROM articles');

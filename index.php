@@ -1,92 +1,65 @@
 <?php
 
 require_once 'controller/frontend.php';
-
-$id = ( isset($_GET['id']) ) ? intval( $_GET['id'] ) : 0;
-$page = ( isset($_GET['page']) ) ? intval( $_GET['page'] ) : 0;
-$author = ( isset($_POST['author']) ) ? htmlentities($_POST['author'], ENT_QUOTES ) : '';
-$comment = ( isset($_POST['comment']) ) ? htmlentities($_POST['comment'], ENT_QUOTES ) : '';
-$action = ( isset($_GET['action']) ) ? htmlentities($_GET['action'], ENT_QUOTES ) : '';
-
-try {
-    switch ( $action ) {
-        case 'listPosts':
-            listPosts($page);
-            break;
-            
-        case 'post':
-            post($id, $page);
-            break;
-
-        case 'addComment':
-            if ($author !== '') {
-                if ($comment !== '') {
-                    addComment($id, $author, $comment);
-                }
-                else {
-                    throw new Exception('Aucun texte dans le commentaire');
-                }
-            }
-            else {
-                throw new Exception('Aucun auteur d\'indiqué');
-            }
-            break;
-
-        default:
-            listPosts($page);
-    }
-}
-catch(Exception $e) {
-    $errorMessage = $e->getMessage();
-    require 'view/errorView.php';
-}
+// require_once 'controller/InscriptionManager.php';
 
 
 
+$id = ( isset($_GET['id']) ) ? intval( $_GET['id'] ) : 0; //corriger les empty
+$page = ( isset($_GET['page']) ) ? intval( $_GET['page'] ) : 1;
+$author = ( isset($_POST['author']) ) ? htmlentities( $_POST['author'], ENT_QUOTES ) : '';
+$comment = ( isset($_POST['comment']) ) ? htmlentities( $_POST['comment'], ENT_QUOTES ) : '';
+
+$methods = array(
+    'listPosts' => array( $page ),
+    'post' => array( $id, $page),
+    'addComment' => array( $id, $author, $comment )
+);
+
+$action =  ( !isset($_GET['action']) || empty( $_GET['action'])) ? 'listPosts' : (array_key_exists( $_GET['action'], $methods ) ? $_GET['action'] : 'listPosts');
+
+call_user_func_array( array( new Frontend(), $action), $methods[$action] );
+
+
+
+
+
+
+
+
+
+
+// $frontend = new Frontend();
 
 // try {
-//     if (isset($_GET['action'])) {
-//         if ($_GET['action'] == 'listPosts' && isset($_GET['page'])) {
-//             if ($_GET['page'] > 0) {
-//                 listPosts();
-//             }
-//             else {
-//                 throw new Exception('Erreur dans la page indiquée');
-//             }
-//         }
-//         elseif ($_GET['action'] == 'post') {
-//             if (isset($_GET['id']) && $_GET['id'] > 0 ) {
-//                 if (isset($_GET['page']) && $_GET['page'] > 0) {
-//                     post();
+//     switch ( $action ) {
+//         case 'listPosts':
+//             $frontend->listPosts($page);
+//             break;
+            
+//         case 'post':
+//             $frontend->post($id, $page);
+//             break;
+
+//         case 'addComment':
+//             if ($author !== '') {
+//                 if ($comment !== '') {
+//                     $frontend->addComment($id, $author, $comment);
 //                 }
 //                 else {
-//                     throw new Exception('Aucune page de commentaire envoyé');
+//                     throw new Exception('Aucun texte dans le commentaire');
 //                 }
 //             }
 //             else {
-//                 throw new Exception('Aucun identifiant de billet envoyé');
+//                 throw new Exception('Aucun auteur d\'indiqué');
 //             }
-//         }
-//         elseif ($_GET['action'] == 'addComment') {
-//             if (isset($_GET['id']) && $_GET['id'] > 0) {
-//                 if (!empty($_POST['author']) && !empty($_POST['comment'])) {
-//                     addComment($_GET['id'], $_POST['author'], $_POST['comment']);
-//                 }
-//                 else {
-//                     throw new Exception('Tous les champs ne sont pas remplis!');
-//                 }
-//             }
-//             else {
-//                 throw new Exception('Erreur: aucun identifiant de billet envoyé');
-//             }
-//         }
-//     }
-    
-//     else {
-//         listPosts();
+//             break;
+
+//         default:
+//             $frontend->listPosts($page);
 //     }
 // }
 // catch(Exception $e) {
 //     $errorMessage = $e->getMessage();
-//     require 'view/errorView.php';
+//     require_once 'view/errorView.php';
 // }

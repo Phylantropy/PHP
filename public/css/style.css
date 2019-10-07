@@ -8,14 +8,18 @@ h1 {
     font-size: 3em;
 }
 
-a:visited {
-    color: #FAD02C;
+a:link {
+    color: #7f38ae;
 }
 
-
+a:visited {
+    color: #c8df52;
+}
 
 header {
     background-color: #e9eaec;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 header p {
