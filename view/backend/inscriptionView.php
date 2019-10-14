@@ -11,8 +11,10 @@
             <h1>Page d'inscription</h1>
         </header>
 
+        <p><a href="index.php">Retour à la liste des billets</a></p>
+
         <div>
-            <form action="controller/backend.php" method="post">
+            <form action="index.php?action=subscription" method="post">
                 <div>
                     <label for="pseudo">Pseudo</label><br />
                     <input type="text" id="pseudo" name="pseudo" />

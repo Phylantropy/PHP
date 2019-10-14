@@ -4,32 +4,36 @@ require_once 'model/UserManager.php';
 
 class InscriptionManager {
 
-    private $pseudo = ( isset($_POST['pseudo']) && !empty($_POST['pseudo']) ) ? htmlentities($_POST['pseudo'], ENT_QUOTES ) : '';
-    private $password = ( isset($_POST['password']) && !empty($_POST['password']) ) ? htmlentities($_POST['password'], ENT_QUOTES ) : '';
-    private $passwordCheck = ( isset($_POST['passwordCheck']) && !empty($_POST['passwordCheck']) ) ? htmlentities($_POST['passwordCheck'], ENT_QUOTES ) : '';
-    private $passwordHash = '';
+    private $pseudo = '';
+    private $password = '';
+    private $passwordCheck = '';
+    private $paswwordHash = '';
+    private $UserManager = '';
+    
+    public function __construct() {
+        $this->pseudo = ( isset($_POST['pseudo']) && !empty($_POST['pseudo']) ) ? htmlentities($_POST['pseudo'], ENT_QUOTES ) : '';
+        $this->password = ( isset($_POST['password']) && !empty($_POST['password']) ) ? htmlentities($_POST['password'], ENT_QUOTES ) : '';
+        $this->passwordCheck = ( isset($_POST['passwordCheck']) && !empty($_POST['passwordCheck']) ) ? htmlentities($_POST['passwordCheck'], ENT_QUOTES ) : '';
+        $this->UserManager = new UserManager();
+    }
 
 
     private function checkVariables() {
         try {
-            if ($this->pseudo !== '') {
-                if ($this->password !== '') {
-                    if ($this->passwordCheck == $this->password) {
-
-                        $this->passwordHash = password_hash( $this->password, PASSWORD_DEFAULT ); 
-                        return true;
-                    }
-                    else {
-                        throw new Exception('Les mots de passe sont différents');
-                    }
-                }
-                else {
-                    throw new Exception('Veuillez saisir un mot de passe');
-                }
-            }
-            else {
+            if ( $this->pseudo === '' ) {
                 throw new Exception('Veuillez saisir un pseudo');
             }
+
+            if ( $this->password === '' ) {
+                throw new Exception('Veuillez saisir un mot de passe');
+            }
+
+            if ( $this->passwordCheck != $this->password ) {
+                throw new Exception('Les mots de passe sont différents');
+            }
+
+            $this->passwordHash = password_hash( $this->password, PASSWORD_DEFAULT );
+                require_once 'view/backend/validInscriptionView.php';
         }
         catch(Exception $e) {
             $errorMessage = $e->getMessage();
@@ -41,14 +45,14 @@ class InscriptionManager {
     private function userExist() {
         try {
             if ( $this->checkVariables() ) {
-                $uManager = new UserManager();
-                $result = $uManager->getUserId( $this->pseudo );
+                // $UserManager = new UserManager();
+                $result = $this->UserManager->getUserId( $this->pseudo );
 
-                if ( $result ) {
+                if ( is_int($result )) {
                     throw new Exception('L\'utilisateur existe déjà');
                 }
                 else {
-                    return $result;
+                    return false;
                 }
             }
         }
@@ -60,21 +64,17 @@ class InscriptionManager {
 
 
     public function addUser() {
-        if ( !$this->userExist() ) {
-            $result = $uManager->addUser( $this->pseudo, $this->passwordHash);
+        if ( $this->userExist() === false ) {
+            // $UserManager = new UserManager();
+            $result = $this->UserManager->addUser( $this->pseudo, $this->passwordHash);
+            var_dump($result);
         }
+
         
                     
-        return $result;
-        // vérifie que le user n'existe pas
-        // puis le rajoute
+       
         // et affiche le message comme quoi le user a été rajouté
     }
-
-    //reçoit et vérifie les données du routeur
-
-    //si les données sont OK, ajoute un utilisateur
-    //si les données sont incorrecte, retour un message d'erreur sur la page d'inscription
 
     //affiche la vue en indiquant que l'usager a été ajouté
 

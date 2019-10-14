@@ -7,12 +7,20 @@
     </head>
 
     <body>
-        <a href="index.php?action=subscribe">S'inscrire</a>
         
+        <span id='subscribe'>
+            <a href="index.php?action=subscribe">S'inscrire</a>
+        </span>
+        <span id="connexion">
+            <a href="index.php?action=connectionView">Se connecter</a>
+        </span>
+        
+
         <?php echo $content ?>
 
         <div id="pages">
             Pages: <?php echo $pages ?>
         </div>
+
     </body>
 </html>

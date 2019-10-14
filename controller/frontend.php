@@ -15,7 +15,7 @@ class Frontend {
         $pagination->setPostView(3);
         $pagesNumber = $pagination->getArticlesCount();
     
-        require 'view/frontend/listPostsView.php';
+        require_once 'view/frontend/listPostsView.php';
     }
 
     public function post($id, $page) {
@@ -29,7 +29,7 @@ class Frontend {
         $pagination->setPostView(4);
         $pagesNumber = $pagination->getCommentsCount($id);
     
-        require 'view/frontend/postView.php';
+        require_once 'view/frontend/postView.php';
     }
 
     public function addComment($postId, $author, $comment) {
@@ -44,6 +44,10 @@ class Frontend {
             header('Location: index.php?action=post&id=' . $postId);
         }
     }
+
+    // public function subscribe() {
+    //     require_once 'view/backend/inscriptionView.php';
+    // }
 }
 
 
