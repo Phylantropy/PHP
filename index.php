@@ -18,7 +18,8 @@ $methods = [
     'subscribe' => [],
     'subscription' => [],
     'connectionView' => [],
-    'connection' => []
+    'connection' => [],
+    'disconnection' => []
 ];
 
 
@@ -44,50 +45,11 @@ switch ( $action ) {
         $result->connectUser();
         break;
 
+    case 'disconnection':
+        $result = new ConnectionManager();
+        $result->disconnection();
+        break;
+
     default:
         call_user_func_array( [ new Frontend(), $action ], $methods[ $action ] );
 }
-
-
-
-
-
-
-
-
-
-
-// $frontend = new Frontend();
-
-// try {
-//     switch ( $action ) {
-//         case 'listPosts':
-//             $frontend->listPosts($page);
-//             break;
-            
-//         case 'post':
-//             $frontend->post($id, $page);
-//             break;
-
-//         case 'addComment':
-//             if ($author !== '') {
-//                 if ($comment !== '') {
-//                     $frontend->addComment($id, $author, $comment);
-//                 }
-//                 else {
-//                     throw new Exception('Aucun texte dans le commentaire');
-//                 }
-//             }
-//             else {
-//                 throw new Exception('Aucun auteur d\'indiqué');
-//             }
-//             break;
-
-//         default:
-//             $frontend->listPosts($page);
-//     }
-// }
-// catch(Exception $e) {
-//     $errorMessage = $e->getMessage();
-//     require_once 'view/errorView.php';
-// }

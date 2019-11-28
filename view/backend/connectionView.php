@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Blog écrivain - Inscription</title>
+        <title>Blog écrivain - Connexion</title>
         <link href="public/css/style.css" rel="stylesheet" />
     </head>
 

@@ -6,6 +6,10 @@ require_once 'model/Pagination.php';
 
 class Frontend {
 
+    public function __construct() {
+        session_start();
+    }
+
     public function listPosts($page) {   
         $postManager = new PostManager();
         $pagination = new Pagination();

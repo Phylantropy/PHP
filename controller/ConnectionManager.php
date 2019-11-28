@@ -8,30 +8,31 @@ class ConnectionManager {
     private $psswrd = '';
     private $UserManager = '';
 
+
     public function __construct() {
         $this->login = ( isset($_POST['login']) && !empty($_POST['login']) ) ? htmlentities($_POST['login'], ENT_QUOTES ) : '';
         $this->psswrd = ( isset($_POST['password']) && !empty($_POST['password']) ) ? htmlentities($_POST['password'], ENT_QUOTES ) : '';
         $this->UserManager = new UserManager();
     }
 
+
     public function connectUser() {
         try {
             $id = $this->UserManager->getUserId( $this->login );
-
-            if ( !is_int( $id ) ) {
-                throw new Exception('Le login ou le mot de passe sont incorrecte');
-            }
-
             $psswrdSaved = $this->UserManager->getUserPassword( $id );
             $passwordIsCorrect = password_verify( $this->psswrd, $psswrdSaved );
 
-            if ( !$passwordIsCorrect) {
+            if ( (!is_int( $id )) || ( !$passwordIsCorrect )) {
                 throw new Exception('Le login ou le mot de passe sont incorrecte');
             }
 
             session_start();
             $_SESSION['id'] = $id;
             $_SESSION['pseudo'] = $this->login;
+
+            setcookie( 'pseudo', $this->login, time() + 60, null, null, false, true );
+            setcookie( 'password', $psswrdSaved, time() + 60, null, null, false, true );
+            
             require_once 'view/backend/validConnectionView.php';
         }
         catch(Exception $e) {
@@ -41,4 +42,35 @@ class ConnectionManager {
     }
 
 
+    public function disconnection() {
+        try {
+            session_start();
+            if ( (!isset( $_SESSION['id'])) || (empty( $_SESSION['id'])) ) {
+                throw new Exception('Vous n\'êtes pas connecté');
+            }
+
+            if ( (!isset( $_SESSION['disconnect'])) && ( $_SESSION['id'] >= 0 ) ) {
+                $_SESSION['disconnect'] = '';
+                require_once 'view/backend/disconnectionView.php';
+            }
+            elseif ( isset( $_SESSION['disconnect'] )) {
+                $this->disconnectUser();
+            }
+        }
+        catch(Exception $e) {
+            $errorMessage = $e->getMessage();
+            require_once 'view/errorView.php';
+        }
+    }
+
+
+    public function disconnectUser() {
+        session_unset();
+        session_destroy();
+
+        setcookie( 'pseudo', '', time() - 100, null, null, false, true);
+        setcookie( 'password', '', time() - 100, null, null, false, true);
+
+        require_once 'view/backend/disconnectionView.php';
+    }
 }

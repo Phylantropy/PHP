@@ -2,6 +2,7 @@
 
 require_once 'model/Manager.php';
 
+
 class UserManager extends Manager {    
 
     public function getUserId( $pseudo ) {
@@ -9,6 +10,7 @@ class UserManager extends Manager {
         $req = $db->prepare( 'SELECT id FROM users WHERE pseudo = ? LIMIT 1' );
         $req->execute( array( $pseudo ));
         $result = $req->fetch();
+
         $result = intval( $result[0] );
 
         if ($result > 0 ) {
@@ -21,6 +23,7 @@ class UserManager extends Manager {
         $req = $db->prepare( 'SELECT psswrd FROM users WHERE id = ? LIMIT 1' );
         $req->execute([ $id ]);
         $result = $req->fetch();
+
         $result = strval( $result[0] );
 
         if ( !empty( $result )) {
@@ -40,7 +43,7 @@ class UserManager extends Manager {
 
     
     
-    public function deleteUser(){
+    public function deleteUser() {
 
     }
 }

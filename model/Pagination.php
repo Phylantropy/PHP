@@ -24,8 +24,8 @@ class Pagination extends Manager {
 
     private function getPagesCount($count) {
         $result = array();
-        $pages = ceil(intval($count[0]) / $this->postView);
-        for ($i = 1; $i <= $pages; $i++) {
+        $pages = ceil( intval($count[0]) / $this->postView );
+        for ( $i = 1; $i <= $pages; $i++ ) {
             $result[] = $i;
         }
 
