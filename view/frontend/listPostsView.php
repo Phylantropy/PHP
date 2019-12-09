@@ -14,14 +14,22 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
 
         
         <?php
-        if ( !isset( $_COOKIE['pseudo'] )) { ?>
+        if ( !isset( $_COOKIE[ 'pseudo' ] )) { ?>
             <div id="subscribe">
                 <a href="index.php?action=subscribe">S'inscrire</a>
             </div>
         <?php
         }
-        // var_dump($_SESSION['id']);
-        // var_dump($_SESSION['pseudo']);
+        ?>
+
+        <?php
+
+        if ( isset( $_SESSION[ 'isAdmin' ] ) && $_SESSION[ 'isAdmin' ] === true && !empty($_COOKIE[ 'pseudo' ]) ) { ?>
+            <div id="administration">
+                <a href="index.php?action=administration">Administration</a>
+            </div>
+        <?php
+        }
         ?>
 
         <div id="connexion">

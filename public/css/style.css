@@ -3,7 +3,7 @@ body {
     background-color: #333652;
 }
 
-#subscribe {
+#subscribe, #administration {
     position: absolute;
     top: 0.5%;
 }

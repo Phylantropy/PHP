@@ -8,7 +8,7 @@ class UserManager extends Manager {
     public function getUserId( $pseudo ) {
         $db = $this->dbConnect();
         $req = $db->prepare( 'SELECT id FROM users WHERE pseudo = ? LIMIT 1' );
-        $req->execute( array( $pseudo ));
+        $req->execute([ $pseudo ]);
         $result = $req->fetch();
 
         $result = intval( $result[0] );
@@ -17,6 +17,21 @@ class UserManager extends Manager {
             return $result;
         }
     }
+
+
+    public function isAdmin( $id ) {
+        $db = $this->dbConnect();
+        $req = $db->prepare( 'SELECT isAdmin FROM users WHERE id = ? LIMIT 1' );
+        $req->execute([ $id ]);
+        $result = $req->fetch();
+
+        $result = intval( $result[0] );
+
+        if ( !empty( $result )) {
+            return $result;
+        }
+    }
+
 
     public function getUserPassword( $id ) {
         $db = $this->dbConnect();
@@ -31,6 +46,7 @@ class UserManager extends Manager {
         }
     }
 
+
     public function addUser( $pseudo, $password ) {
         if ( !is_int($this->getUserId( $pseudo )) ) {
             $db = $this->dbConnect();
@@ -41,7 +57,6 @@ class UserManager extends Manager {
         }
     }
 
-    
     
     public function deleteUser() {
 

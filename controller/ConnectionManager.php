@@ -20,6 +20,7 @@ class ConnectionManager {
         try {
             $id = $this->UserManager->getUserId( $this->login );
             $psswrdSaved = $this->UserManager->getUserPassword( $id );
+            $isAdmin = $this->UserManager->isAdmin( $id );
             $passwordIsCorrect = password_verify( $this->psswrd, $psswrdSaved );
 
             if ( (!is_int( $id )) || ( !$passwordIsCorrect )) {
@@ -27,8 +28,11 @@ class ConnectionManager {
             }
 
             session_start();
-            $_SESSION['id'] = $id;
-            $_SESSION['pseudo'] = $this->login;
+            $_SESSION[ 'id' ] = $id;
+            $_SESSION[ 'pseudo' ] = $this->login;
+            $_SESSION[ 'isAdmin' ] = ( $isAdmin ) ? true : false;
+
+            var_dump( $_SESSION['isAdmin'] );
 
             setcookie( 'pseudo', $this->login, time() + 60, null, null, false, true );
             setcookie( 'password', $psswrdSaved, time() + 60, null, null, false, true );

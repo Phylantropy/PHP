@@ -5,7 +5,6 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
 
 ?>
 
-
 <?php ob_start(); ?>
     <header>
         <div id="h1">
@@ -19,8 +18,6 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
             if ( !isset( $_SESSION['pseudo'] )) {
                 echo( '<a href="index.php?action=subscribe">S\'inscrire</a>' );
             }
-            // var_dump($_SESSION['id']);
-            // var_dump($_COOKIE['pseudo']);
             ?>
         </div>
 

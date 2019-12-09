@@ -1,5 +1,6 @@
 <?php
 
+require_once 'controller/backend.php';
 require_once 'controller/frontend.php';
 require_once 'controller/InscriptionManager.php';
 require_once 'controller/ConnectionManager.php';
@@ -22,7 +23,7 @@ $methods = [
     'disconnection' => []
 ];
 
-
+ 
 $action =  ( !isset($_GET['action']) || empty( $_GET['action'] )) ? 'listPosts' : (array_key_exists( $_GET['action'], $methods ) ? $_GET['action'] : 'listPosts');
 
 
@@ -48,6 +49,11 @@ switch ( $action ) {
     case 'disconnection':
         $result = new ConnectionManager();
         $result->disconnection();
+        break;
+
+    case 'administration':
+        $result = new Backend();
+        $result->listPosts();
         break;
 
     default:
