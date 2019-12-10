@@ -6,41 +6,17 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
 ?>
 
 <?php ob_start(); ?>
-    <header>
-        <div id="h1">
-            <h1>Mon blog</h1>
-            <p>Voici les derniers billets du blog :</p>
-        </div>
 
-        
-        <?php
-        if ( !isset( $_COOKIE[ 'pseudo' ] )) { ?>
-            <div id="subscribe">
-                <a href="index.php?action=subscribe">S'inscrire</a>
-            </div>
-        <?php
-        }
-        ?>
+    <div id="h1">
+        <h1>Mon blog</h1>
+        <p>Voici les derniers billets du blog :</p>
+    </div>
 
-        <?php
-
-        if ( isset( $_SESSION[ 'isAdmin' ] ) && $_SESSION[ 'isAdmin' ] === true && !empty($_COOKIE[ 'pseudo' ]) ) { ?>
-            <div id="administration">
-                <a href="index.php?action=administration">Administration</a>
-            </div>
-        <?php
-        }
-        ?>
-
-        <div id="connexion">
-            <a href="index.php?action=<?php echo $connectionCSS ?>"><?php echo $connectionText ?></a>
-        </div>
-    </header>
 <?php $header = ob_get_clean(); ?>
 
 
-<?php ob_start(); ?>
-    <?php
+<?php ob_start(); 
+
     while ( $data = $posts->fetch() ) {
     ?>
         <div class="news">

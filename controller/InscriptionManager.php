@@ -31,9 +31,7 @@ class InscriptionManager {
             if ( $this->passwordCheck != $this->password ) {
                 throw new Exception('Les mots de passe sont différents');
             }
-
-            $this->passwordHash = password_hash( $this->password, PASSWORD_DEFAULT );
-                require_once 'view/backend/validInscriptionView.php';
+            return true;
         }
         catch(Exception $e) {
             $errorMessage = $e->getMessage();
@@ -45,13 +43,11 @@ class InscriptionManager {
     private function userExist() {
         try {
             if ( $this->checkVariables() ) {
-                // $UserManager = new UserManager();
                 $result = $this->UserManager->getUserId( $this->pseudo );
 
                 if ( is_int($result )) {
                     throw new Exception('L\'utilisateur existe déjà');
-                }
-                else {
+                } else {
                     return false;
                 }
             }
@@ -64,18 +60,21 @@ class InscriptionManager {
 
 
     public function addUser() {
-        if ( $this->userExist() === false ) {
-            // $UserManager = new UserManager();
-            $result = $this->UserManager->addUser( $this->pseudo, $this->passwordHash);
-            var_dump($result);
+        try {
+            if ( $this->userExist() === false ) {
+                $this->passwordHash = password_hash( $this->password, PASSWORD_DEFAULT );
+                $result = $this->UserManager->addUser( $this->pseudo, $this->passwordHash);
+
+                if ( $result === true ) {
+                    require_once 'view/backend/validInscriptionView.php';
+                } else {
+                    throw new Exception( 'L\'ajout d\'utilisateur à échoué' );
+                }
+            }
         }
-
-        
-                    
-       
-        // et affiche le message comme quoi le user a été rajouté
+        catch(Exception $e) {
+            $errorMessage = $e->getMessage();
+            require_once 'view/errorView.php';
+        }
     }
-
-    //affiche la vue en indiquant que l'usager a été ajouté
-
 }

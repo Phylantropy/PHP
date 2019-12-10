@@ -6,25 +6,13 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
 ?>
 
 <?php ob_start(); ?>
-    <header>
-        <div id="h1">
-            <h1>Mon blog</h1>
-        </div>
 
-        <p><a href="index.php">Retour à la liste des billets</a></p>
+    <div id="h1">
+        <h1>Mon blog</h1>
+    </div>
 
-        <div id="subscribe">
-            <?php
-            if ( !isset( $_SESSION['pseudo'] )) {
-                echo( '<a href="index.php?action=subscribe">S\'inscrire</a>' );
-            }
-            ?>
-        </div>
-
-        <div id="connexion">
-            <a href="index.php?action=<?php echo $connectionCSS ?>"><?php echo $connectionText ?></a>
-        </div>
-    </header>
+    <p><a href="index.php">Retour à la liste des billets</a></p>
+    
 <?php $header = ob_get_clean(); ?>
 
 
