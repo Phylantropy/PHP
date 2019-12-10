@@ -51,24 +51,24 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
         </div>
     <?php
     }
+
+    if ( isset( $_SESSION['pseudo']) && !empty( $_SESSION['pseudo']) && isset($_COOKIE['pseudo']) ) {
     ?>
+        <h3>Ajouter un commentaire</h3>
 
-    <h3>Ajouter un commentaire</h3>
+        <form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
+            <div>
+                <label for="comment">Commentaire</label><br />
+                <textarea id="comment" name="comment"></textarea>
+            </div>
+            <div>
+                <input type="submit" />
+            </div>
+        </form>
+        <?php
+    }
 
-    <form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
-        <div>
-            <label for="author">Auteur</label><br />
-            <input type="text" id="author" name="author" />
-        </div>
-        <div>
-            <label for="comment">Commentaire</label><br />
-            <textarea id="comment" name="comment"></textarea>
-        </div>
-        <div>
-            <input type="submit" />
-        </div>
-    </form>
-<?php $content = ob_get_clean(); ?>
+    $content = ob_get_clean(); ?>
 
 
 <?php

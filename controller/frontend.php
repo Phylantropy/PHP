@@ -37,15 +37,25 @@ class Frontend {
     }
 
     public function addComment($postId, $author, $comment) {
-        $commentManager = new CommentManager();
+        try {
+            $commentManager = new CommentManager();
 
-        $affectedLines = $commentManager->postComment($postId, $author, $comment);
-    
-        if ($affectedLines === false) {
-            throw new Exception('Impossible d\'ajouter le commentaire!');
+            if ( !empty( $author ) && !empty( $comment ) ) {
+                $affectedLines = $commentManager->postComment($postId, $author, $comment);
+            } else {
+                throw new Exception('Impossible d\'ajouter le commentaire!');
+            }
+        
+            if ( $affectedLines === false ) {
+                throw new Exception('L\'ajout de commentaire à échoué');
+            }
+            else {
+                header('Location: index.php?action=post&id=' . $postId);
+            }
         }
-        else {
-            header('Location: index.php?action=post&id=' . $postId);
+        catch(Exception $e) {
+            $errorMessage = $e->getMessage();
+            require_once 'view/errorView.php';
         }
     }
 

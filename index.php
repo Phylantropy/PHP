@@ -9,8 +9,8 @@ require_once 'controller/ConnectionManager.php';
 
 $id = ( isset( $_GET['id'] ) && !empty( $_GET['id'] )) ? intval( $_GET['id'] ) : 0;
 $page = ( isset( $_GET['page'] ) && !empty( $_GET['page'] )) ? intval( $_GET['page'] ) : 1;
-$author = ( isset( $_POST['author'] ) && !empty( $_GET['author'] )) ? htmlentities( $_POST['author'], ENT_QUOTES ) : '';
-$comment = ( isset( $_POST['comment'] ) && !empty( $_GET['comment'] )) ? htmlentities( $_POST['comment'], ENT_QUOTES ) : '';
+$author = ( isset( $_COOKIE['pseudo'] ) && !empty( $_COOKIE['pseudo'] )) ? htmlentities( $_COOKIE['pseudo'], ENT_QUOTES ) : '';
+$comment = ( isset( $_POST['comment'] ) && !empty( $_POST['comment'] )) ? htmlentities( $_POST['comment'], ENT_QUOTES ) : '';
 
 $methods = [
     'listPosts' => [ $page ],
