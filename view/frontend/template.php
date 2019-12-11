@@ -8,7 +8,7 @@
 
     <body>
         <header>
-            <?php echo $header ?>
+            <?= $header ?>
             
             <?php
             if ( !isset( $_COOKIE[ 'pseudo' ] )) { ?>
@@ -30,14 +30,14 @@
             ?>
 
             <div id="connexion">
-                <a href="index.php?action=<?php echo $connectionCSS ?>"><?php echo $connectionText ?></a>
+                <a href="index.php?action=<?= $connectionCSS ?>"><?= $connectionText ?></a>
             </div>
         </header>
 
-        <?php echo $content ?>
+        <?= $content ?>
 
         <div id="pages">
-            Pages: <?php echo $pages ?>
+            Pages: <?= $pages ?>
         </div>
     </body>
 </html>

@@ -13,7 +13,7 @@
 
         <p><a href="index.php">Retour à la liste des billets</a></p>
 
-        <?php echo $content ?>
+        <?= $content ?>
         
     </body>
 </html>

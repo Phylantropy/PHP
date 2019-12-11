@@ -45,7 +45,7 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
 ob_start();
     foreach ( $pagesNumber as $value ) {
     ?>
-        <a href="index.php?action=listPosts&amp;page=<?php echo $value ?>"><?php echo $value ?></a>
+        <a href="index.php?action=listPosts&amp;page=<?= $value ?>"><?= $value ?></a>
     <?php
     }
     unset( $value );

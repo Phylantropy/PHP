@@ -23,7 +23,7 @@ $methods = [
     'disconnection' => []
 ];
 
- 
+
 $action =  ( !isset($_GET['action']) || empty( $_GET['action'] )) ? 'listPosts' : (array_key_exists( $_GET['action'], $methods ) ? $_GET['action'] : 'listPosts');
 
 

@@ -64,7 +64,7 @@ ob_start();
 
 foreach ($pagesNumber as $value) {
 ?>
-    <a href="index.php?action=post&amp;id=<?= $post['id']; ?>&amp;page=<?php echo $value ?>"><?php echo $value ?></a>
+    <a href="index.php?action=post&amp;id=<?= $post['id']; ?>&amp;page=<?= $value ?>"><?= $value ?></a>
 <?php
 }
 unset($value);
