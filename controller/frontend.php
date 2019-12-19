@@ -43,13 +43,13 @@ class Frontend {
         try {
             $commentManager = new CommentManager();
 
-            if ( !empty( $author ) && !empty( $comment ) ) {
-                $affectedLines = $commentManager->postComment($postId, $author, $comment);
+            if ( !empty( $author ) && !empty( $comment )) {
+                $sendComment = $commentManager->postComment($postId, $author, $comment);
             } else {
                 throw new Exception('Impossible d\'ajouter le commentaire!');
             }
         
-            if ( $affectedLines === false ) {
+            if ( $sendComment === false ) {
                 throw new Exception('L\'ajout de commentaire à échoué');
             }
             else {

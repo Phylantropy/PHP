@@ -20,8 +20,8 @@ class ConnectionManager {
         try {
             $id = $this->UserManager->getUserId( $this->login );
             $psswrdSaved = $this->UserManager->getUserPassword( $id );
-            $isAdmin = $this->UserManager->isAdmin( $id );
             $passwordIsCorrect = password_verify( $this->psswrd, $psswrdSaved );
+            $isAdmin = $this->UserManager->isAdmin( $id );
 
             if ( (!is_int( $id )) || ( !$passwordIsCorrect )) {
                 throw new Exception('Le login ou le mot de passe sont incorrecte');
@@ -34,8 +34,8 @@ class ConnectionManager {
 
             var_dump( $_SESSION['isAdmin'] );
 
-            setcookie( 'pseudo', $this->login, time() + 60, null, null, false, true );
-            setcookie( 'password', $psswrdSaved, time() + 60, null, null, false, true );
+            setcookie( 'pseudo', $this->login, time() + 3600, null, null, false, true );
+            setcookie( 'password', $psswrdSaved, time() + 3600, null, null, false, true );
             
             require_once 'view/backend/validConnectionView.php';
         }

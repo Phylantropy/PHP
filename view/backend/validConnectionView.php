@@ -9,6 +9,14 @@
     <body>
         <p>Vous êtes connecté!</p>
         <br />
-        <p><a href="index.php">Retour à la liste des billets</a></p>
+        <p>
+        <?php
+            if ( $_SESSION[ 'isAdmin' ] === false ) {
+                echo( '<a href="index.php">Retour à la liste des billets</a>' );
+            } elseif ( $_SESSION[ 'isAdmin' ] === true ) {
+                echo( '<a href="index.php?action=administration">Accueil administration</a>' );
+            }
+        ?>
+        </p>
     </body>
 </html>

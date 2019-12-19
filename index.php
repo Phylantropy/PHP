@@ -1,7 +1,7 @@
 <?php
 
-require_once 'controller/backend.php';
-require_once 'controller/frontend.php';
+require_once 'controller/Backend.php';
+require_once 'controller/Frontend.php';
 require_once 'controller/InscriptionManager.php';
 require_once 'controller/ConnectionManager.php';
 
@@ -20,7 +20,9 @@ $methods = [
     'subscription' => [],
     'connectionView' => [],
     'connection' => [],
-    'disconnection' => []
+    'disconnection' => [],
+    'administration' => [],
+    'addPost' => []
 ];
 
 
@@ -53,7 +55,12 @@ switch ( $action ) {
 
     case 'administration':
         $result = new Backend();
-        $result->listPosts();
+        $result->adminPanel();
+        break;
+
+    case 'addPost':
+        $result = new Backend();
+        $result->addPost();
         break;
 
     default:

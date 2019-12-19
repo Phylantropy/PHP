@@ -56,9 +56,4 @@ class UserManager extends Manager {
             return $result; // renvoi true si ajouté
         }
     }
-
-    
-    public function deleteUser() {
-
-    }
 }

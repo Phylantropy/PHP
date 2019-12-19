@@ -2,27 +2,25 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title><?= $title ?></title>
+        <title>Administration</title>
         <link href="public/css/style.css" rel="stylesheet" />
+        <script src='public\tinymce\js\tinymce\tinymce.min.js' referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+                selector: '#mytextarea'
+            });
+        </script>
     </head>
 
     <body>
         <header>
+
             <?= $header ?>
             
-            <?php
-            if ( !isset( $_COOKIE[ 'pseudo' ] )) { ?>
-                <div id="subscribe">
-                    <a href="index.php?action=subscribe">S'inscrire</a>
-                </div>
-            <?php
-            }
-            ?>
-
             <div id="connexion">
                 <a href="index.php?action=<?= $connectionCSS ?>"><?= $connectionText ?></a>
             </div>
-        </header>
+        </header>        
 
         <?= $content ?>
 
