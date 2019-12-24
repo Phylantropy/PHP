@@ -20,9 +20,12 @@
             <div id="connexion">
                 <a href="index.php?action=<?= $connectionCSS ?>"><?= $connectionText ?></a>
             </div>
-        </header>        
+        </header>
 
         <?= $content ?>
 
+        <div id="pages"> 
+            Pages: <?= $pages ?> 
+        </div>
     </body>
 </html>

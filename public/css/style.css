@@ -42,8 +42,7 @@ h1, p, .news h3 {
     text-align: center;
 }
 
-.news span {
-    display: block;
+#postAnnonce {
     text-align: center;
 }
 

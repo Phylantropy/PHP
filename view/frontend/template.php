@@ -26,5 +26,8 @@
 
         <?= $content ?>
 
+        <div id="pages"> 
+            Pages: <?= $pages ?> 
+        </div>
     </body>
 </html>
