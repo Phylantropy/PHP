@@ -43,7 +43,7 @@ class PostManager extends Manager {
     }
 
     
-    public function editPost( $post, $postId ) {
+    public function updatePost( $post, $postId ) {
         $db = $this->dbConnect();
         $req = $db->prepare( 'UPDATE articles SET content = ? WHERE id = ?' );
         $result = $req->execute( array( $post, $postId ));
@@ -52,10 +52,10 @@ class PostManager extends Manager {
     }
 
 
-    public function deletePost( $post ) {
+    public function deletePost( $postId ) {
         $db = $this->dbConnect();
         $req = $db->prepare( 'DELETE FROM articles WHERE id = ?' );
-        $result = $req->execute( array( $post ));
+        $result = $req->execute( array( $postId ));
 
         return $result;
     }

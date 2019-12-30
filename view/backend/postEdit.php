@@ -11,6 +11,8 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
         <h1>Administration</h1>
     </div>
 
+    <a href="index.php?action=administration">Accueil administration</a>
+
 <?php $header = ob_get_clean(); ?>
 
 
@@ -19,11 +21,24 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
     <section id="editor">
         <h2>Edition de billet</h2>
 
-        <form action="index.php?action=addPost" method="post">
+        <form action="index.php?action=updatePost&amp;postId=<?= $postId ?>" method="post">
             <textarea id="mytextarea" name="mytextarea"><?= $post ?></textarea>
             <br />
             <input type="submit" value="Modifier"/>
         </form>
+
+       
+        <p id="delete-confirmation">
+            Vous êtes sur le point de supprimer ce billet.
+            <br />
+            Confirmation: <a href="index.php?action=deletePost&amp;postId=<?= $postId ?>"><input type="button" value="Supprimer"></a>
+        </p>
+        
+        <p id="delete-button-P">
+            <input type="button" value="Supprimer" id="delete-button"> 
+        </p>
+
+        <script src="public/js/delete-post.js"></script>
     </section>
 
     <div id="postAnnonce">Dernier billet publié:</div>

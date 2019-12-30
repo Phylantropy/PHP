@@ -40,6 +40,7 @@ class Backend {
 
             $title = $_POST[ 'title' ];
             $post = $_POST[ 'mytextarea' ];
+            $post = strip_tags( $post );
 
             $check = $this->checkAddPost( $title, $post );
 
@@ -75,12 +76,26 @@ class Backend {
 
 
     public function updatePost() {
+        if ( $this->isAdmin === true ) {
+            $post = $_POST[ 'mytextarea' ];
+            $postId = $_GET[ 'postId' ];
+            $post = strip_tags( $post );
 
+            if ( !empty( $post ) && !empty( $postId ) ) { 
+                $this->postManager->updatePost( $post, $postId );
+            }
+
+            header( 'Location: index.php?action=administration' );
+        }
     }
 
 
     public function deletePost() {
-        
+        if ( $this->isAdmin === true ) {
+            $postId = $_GET[ 'postId' ];
+            $this->postManager->deletePost( $postId );
+            header( 'Location: index.php?action=administration' );
+        }
     }
 
     

@@ -23,7 +23,9 @@ $methods = [
     'disconnection' => [],
     'administration' => [],
     'addPost' => [],
-    'editPost' => []
+    'editPost' => [],
+    'updatePost' => [],
+    'deletePost' => []
 ];
 
 
@@ -67,6 +69,16 @@ switch ( $action ) {
     case 'editPost':
         $result = new Backend();
         $result->editPost();
+        break;
+        
+    case 'updatePost':
+        $result = new Backend();
+        $result->updatePost();
+        break;
+        
+    case 'deletePost':
+        $result = new Backend();
+        $result->deletePost();
         break;
 
     default:
