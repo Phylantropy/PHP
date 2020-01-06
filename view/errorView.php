@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <?= $errorMessage ?>
+        <p><?= $errorMessage ?></p>
         <br />
         <a href="index.php">Retourner à l'accueil</a>
     </body>

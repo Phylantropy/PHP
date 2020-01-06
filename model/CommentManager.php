@@ -55,4 +55,40 @@ class CommentManager extends Manager {
 
         return $result;
     }
+
+
+    public function reportComment( $commentId, $userId ) {
+        $db = $this->dbConnect();
+        $req = $db->prepare( 'INSERT INTO reports( comment_id, user_id, report_date ) VALUES( ?, ?, NOW() )' );
+        $result = $req->execute( array( $commentId, $userId ));
+
+        return $result;
+    }
+
+
+    public function reportedComments( $commentId, $userId ) {
+        $db = $this->dbConnect();
+        $req = $db->prepare( 'SELECT comment_id, user_id FROM reports WHERE comment_id = ? OR user_id = ?' );
+        $req->execute( array( $commentId, $userId ));
+
+        return $req;
+    }
+
+
+    public function getUnmoderateComments() {
+        $db = $this->dbConnect();
+        $req = $db->prepare( 'SELECT c.author, c.content, c.comment_date, r.report_date, u.pseudo reporter FROM reports r INNER JOIN comments c ON r.comment_id = c.id INNER JOIN users u ON r.user_id = u.id  WHERE r.moderated = 0 ORDER BY r.report_date' );
+        $result = $req->execute();
+
+        return $result;
+    }
+
+
+    public function moderateComment( $commentId ) {
+        $db = $this->dbConnect();
+        $req = $db->prepare( 'UPDATE reports SET moderated = 1, moderated_date = NOW() WHERE comment_id = ?' );
+        $result = $req->execute( array( $commentId ));
+
+        return $result;
+    }
 }

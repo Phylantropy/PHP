@@ -25,7 +25,8 @@ $methods = [
     'addPost' => [],
     'editPost' => [],
     'updatePost' => [],
-    'deletePost' => []
+    'deletePost' => [],
+    'reportComment' => []
 ];
 
 
@@ -79,6 +80,11 @@ switch ( $action ) {
     case 'deletePost':
         $result = new Backend();
         $result->deletePost();
+        break;
+        
+    case 'reportComment':
+        $result = new Backend();
+        $result->reportComment();
         break;
 
     default:

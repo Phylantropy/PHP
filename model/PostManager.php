@@ -54,8 +54,8 @@ class PostManager extends Manager {
 
     public function deletePost( $postId ) {
         $db = $this->dbConnect();
-        $req = $db->prepare( 'DELETE FROM articles WHERE id = ?' );
-        $result = $req->execute( array( $postId ));
+        $req = $db->prepare( 'DELETE articles, comments FROM articles INNER JOIN comments WHERE articles.id = ? AND comments.post_id = ?' );
+        $result = $req->execute( array( $postId, $postId ));
 
         return $result;
     }

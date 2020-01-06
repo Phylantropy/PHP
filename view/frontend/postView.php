@@ -34,14 +34,21 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
     while ($comment = $comments->fetch() ) {
     ?>
         <div class="commentaires">
-        <p class="firstP"><strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?></p>
-        <p><?= nl2br(htmlspecialchars($comment['content'])) ?></p>
+            <p class="firstP"><strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?></p>
+            <p><?= nl2br(htmlspecialchars($comment['content'])) ?></p>
+
+            <?php
+            if ( isset( $_COOKIE['pseudo'] ) && !empty( $_COOKIE['pseudo'] )) { ?>
+                <p><a href="index.php?action=reportComment&amp;commentId=<?= $comment['id'] ?>&amp;user=<?= $_COOKIE['pseudo'] ?>">Signaler</a></p>
+            <?php
+            }
+            ?>
+
         </div>
     <?php
     }
 
-    if ( isset( $_SESSION['pseudo']) && !empty( $_SESSION['pseudo']) && isset($_COOKIE['pseudo']) ) {
-    ?>
+    if ( isset( $_SESSION['pseudo']) && !empty( $_SESSION['pseudo']) && isset($_COOKIE['pseudo']) ) { ?>
         <h3>Ajouter un commentaire</h3>
 
         <form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
