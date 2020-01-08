@@ -26,7 +26,12 @@ $methods = [
     'editPost' => [],
     'updatePost' => [],
     'deletePost' => [],
-    'reportComment' => []
+    'reportComment' => [],
+    'newPost' => [],
+    'commentsModeration' => [],
+    'editReportedComment' => [],
+    'moderateComment' => [],
+    'deleteReportedComment' => []
 ];
 
 
@@ -69,7 +74,7 @@ switch ( $action ) {
 
     case 'editPost':
         $result = new Backend();
-        $result->editPost();
+        $result->editPostPanel();
         break;
         
     case 'updatePost':
@@ -85,6 +90,26 @@ switch ( $action ) {
     case 'reportComment':
         $result = new Backend();
         $result->reportComment();
+        break;
+
+    case 'newPost':
+        $result = new Backend();
+        $result->newPostPanel();
+        break;
+
+    case 'commentsModeration':
+        $result = new Backend();
+        $result->reportedComments();
+        break;
+    
+    case 'moderateComment':
+        $result = new Backend();
+        $result->moderateComment();
+        break;
+        
+    case 'deleteReportedComment':
+        $result = new Backend();
+        $result->deleteReportedComment();
         break;
 
     default:

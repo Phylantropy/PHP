@@ -1,24 +1,23 @@
-<?php $title = 'Blog écrivain';
+<?php
+$title = 'Blog écrivain';
 
 $connectionCSS = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'disconnection' ) : htmlspecialchars( 'connectionView' );
 $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconnecter' ) : htmlspecialchars( 'Se connecter' );
 
-?>
 
-<?php ob_start(); ?>
+ob_start(); ?>
 
     <div id="h1">
         <h1>Mon blog</h1>
         <p>Voici les derniers billets du blog :</p>
     </div>
+<?php
+$header = ob_get_clean();
 
-<?php $header = ob_get_clean(); ?>
 
+ob_start(); 
 
-<?php ob_start(); 
-
-    while ( $data = $posts->fetch() ) {
-    ?>
+    while ( $data = $posts->fetch() ) { ?>
         <div class="news">
             <h3>
                 <?= htmlspecialchars( $data['title'] ); ?>
@@ -37,11 +36,9 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
     <?php
     }
     $posts->closeCursor();
-    ?>
-<?php $content = ob_get_clean(); ?>
+$content = ob_get_clean();
 
 
-<?php
 ob_start();
     foreach ( $pagesNumber as $value ) {
     ?>
@@ -49,8 +46,7 @@ ob_start();
     <?php
     }
     unset( $value );
-    ?>
-<?php $pages = ob_get_clean(); ?>
+$pages = ob_get_clean();
 
 
-<?php require_once 'view/frontend/template.php'; ?>
+require_once 'view/frontend/template.php';

@@ -16,20 +16,14 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
 
 <?php ob_start(); ?>
     
-    <section id="editor">
-        <h2>Nouveau billet</h2>
+    <section id="links">
 
-        <form action="index.php?action=addPost" method="post">
-            Titre du billet:<input type="text" name="title"/>
-            <br />
-            <br />
-            <textarea id="mytextarea" name="mytextarea"></textarea>
-            <br />
-            <input type="submit" value="Publier"/>
-        </form>
+        <a href="index.php?action=newPost">Nouveau billet</a>
+        <a href="index.php?action=commentsModeration">Modération des commentaires</a>
+        
     </section>
 
-    <div id="postAnnonce">Dernier billet publié:</div>
+    <div id="postAnnonce">Billets publiés:</div>
 
     <?php
     while ( $data = $posts->fetch() ) {

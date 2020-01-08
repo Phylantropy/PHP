@@ -93,6 +93,6 @@ h3 em {
     margin-right: auto;
 }
 
-#delete-confirmation {
+#delete-confirmation, .delete-confirmation, .editComment {
     display: none;
 }

@@ -3,6 +3,7 @@
 class Backend {
 
     private $listPostsView = 5;
+    private $commentsView = 6;
     private $isAdmin = '';
     private $page = '';
 
@@ -14,8 +15,8 @@ class Backend {
 
     public function __construct() {
         session_start();
-        $this->isAdmin = $_SESSION[ 'isAdmin' ];
-        $this->page = ( isset( $_GET['page'] ) && !empty( $_GET['page'] )) ? intval( $_GET['page'] ) : 1;
+        $this->isAdmin = ( isset( $_SESSION[ 'isAdmin' ] ) && !empty( $_SESSION[ 'isAdmin' ] )) ?  $_SESSION[ 'isAdmin' ] : false;
+        $this->page = ( isset( $_GET[ 'page' ] ) && !empty( $_GET[ 'page' ] )) ? intval( $_GET['page'] ) : 1;
         $this->PostManager = new PostManager();
         $this->CommentManager = new CommentManager();
         $this->Pagination = new Pagination();
@@ -33,6 +34,23 @@ class Backend {
             $pagesNumber = $this->Pagination->getArticlesCount();
 
             require_once 'view/backend/adminPanel.php';
+        }
+        else {
+            header( 'Location: index.php' );
+        }
+    }
+    
+    
+    public function newPostPanel() {
+        if ( $this->isAdmin === true ) {
+        
+            $this->PostManager->setPostView( $this->listPostsView );
+            $posts = $this->PostManager->getPosts( $this->page );
+
+            $this->Pagination->setPostView( $this->listPostsView );
+            $pagesNumber = $this->Pagination->getArticlesCount();
+
+            require_once 'view/backend/newPostPanel.php';
         }
         else {
             header( 'Location: index.php' );
@@ -63,7 +81,7 @@ class Backend {
     }
 
 
-    public function editPost() {
+    public function editPostPanel() {
         if ( $this->isAdmin === true ) {
 
             $postId = $_GET[ 'postId' ];
@@ -76,7 +94,7 @@ class Backend {
             $posts = $this->PostManager->getPosts( $this->page );
             $pagesNumber = $this->Pagination->getArticlesCount();
 
-            require_once 'view/backend/postEdit.php';
+            require_once 'view/backend/editPanel.php';
         }
     }
 
@@ -129,7 +147,7 @@ class Backend {
         $commentId = intval( $_GET[ 'commentId' ]);
         $user = $_GET[ 'user' ];
         $userId = intval( $this->UserManager->getUserId( $user ));
-        $result = $this->CommentManager->reportedComments( $commentId, $userId );
+        $result = $this->CommentManager->getReportedComments( $commentId, $userId );
         
         $rowCount = $result->rowCount();
         $resultAr = $result->fetchAll( PDO::FETCH_ASSOC );
@@ -138,8 +156,10 @@ class Backend {
         $reported = 0;
 
         for ( $i = 0; $i < $rowCount; $i++ ) {
+
             if ( $resultAr[ $i ][ 'comment_id' ] ==  $commentId ) {
                 $commentCount++;
+
                 if ( $resultAr[ $i ][ 'user_id' ] ==  $userId ) {
                     $reported++;
                 }
@@ -148,30 +168,68 @@ class Backend {
 
         if (( $commentCount < 3 ) && ( $reported === 0 )) {
             $this->CommentManager->reportComment( $commentId, $userId );
+
             require_once 'view/backend/validReportView.php';
 
         } elseif ( $commentCount === 3 ) {
             $errorMessage = 'Signalement impossible: le commentaire à déjà été suffisament signalé.' ;
+
             require_once 'view/errorView.php';
 
         } elseif ( $reported >= 1 ) {
             $errorMessage = 'Signalement impossible: vous avez déjà signalé ce commentaire.';
+
             require_once 'view/errorView.php';
         }
     }
 
 
-    public function showReportedComment() {
+    public function reportedComments() {
+        if ( $this->isAdmin === true ) {
+            $comments = $this->CommentManager->getUnmoderatedComments();
+            $commentsPdoCount = $comments->rowCount();
+            $commentsPDO = $comments->fetchAll( PDO::FETCH_ASSOC );
 
+            $commentsArr = [];
+
+            for ( $commentId = '', $i = 0 ; $i < $commentsPdoCount; $i++ ) {
+
+                if ( $commentId != $commentsPDO[$i][ 'comment_id' ]  ) {
+                   $commentsArr[] = $commentsPDO[$i];
+                }
+
+                $commentId = $commentsPDO[$i][ 'comment_id' ];
+            }
+
+            $this->page--;
+            $firstComment = ( $this->page * $this->commentsView );
+            $commentsCount = count( $commentsArr );
+            $pageCount = ceil( $commentsCount / $this->commentsView );
+
+            require_once 'view/backend/commentsPanel.php';
+        }
     }
 
 
-    public function editReportedComment() {
+    public function moderateComment() {
+        if ( $this->isAdmin === true ) {
+            $comment = $_POST[ 'comment' ];
+            $commentId = $_GET[ 'commentId' ];
 
+            $this->CommentManager->editComment( $comment, $commentId );
+            $this->CommentManager->moderateComment( $commentId );
+            $this->reportedComments();
+        }
     }
 
 
-    public function moderateComment( $commentId ) {
-        
+    public function deleteReportedComment() {
+        if ( $this->isAdmin === true ) {
+            $commentId = $_GET[ 'commentId' ];
+
+            $this->CommentManager->deleteComment( $commentId );
+            $this->CommentManager->moderateComment( $commentId );
+            $this->reportedComments();
+        }
     }
 }
