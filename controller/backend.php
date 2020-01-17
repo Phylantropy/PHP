@@ -27,10 +27,10 @@ class Backend {
     public function adminPanel() {
         if ( $this->isAdmin === true ) {
         
-            $this->PostManager->setPostView( $this->listPostsView );
+            $this->PostManager->setMaxView( $this->listPostsView );
             $posts = $this->PostManager->getPosts( $this->page );
 
-            $this->Pagination->setPostView( $this->listPostsView );
+            $this->Pagination->setMaxView( $this->listPostsView );
             $pagesNumber = $this->Pagination->getArticlesCount();
 
             require_once 'view/backend/adminPanel.php';
@@ -44,10 +44,10 @@ class Backend {
     public function newPostPanel() {
         if ( $this->isAdmin === true ) {
         
-            $this->PostManager->setPostView( $this->listPostsView );
+            $this->PostManager->setMaxView( $this->listPostsView );
             $posts = $this->PostManager->getPosts( $this->page );
 
-            $this->Pagination->setPostView( $this->listPostsView );
+            $this->Pagination->setMaxView( $this->listPostsView );
             $pagesNumber = $this->Pagination->getArticlesCount();
 
             require_once 'view/backend/newPostPanel.php';

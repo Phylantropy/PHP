@@ -15,7 +15,6 @@ class Frontend {
 
 
     public function __construct() {
-
         session_start();
         $this->PostManager = new PostManager();
         $this->CommentManager = new CommentManager();
@@ -25,10 +24,12 @@ class Frontend {
 
     public function listPosts( $page ) {
 
-        $this->PostManager->setPostView( $this->listPostsView );
-        $this->Pagination->setPostView( $this->listPostsView );
+        $this->PostManager->setMaxView( $this->listPostsView );
+        $this->Pagination->setMaxView( $this->listPostsView );
 
-        $posts = $this->PostManager->getPosts( $page );
+        $firstPost = ( $page * $this->listPostsView ) - $this->listPostsView;
+        
+        $posts = $this->PostManager->getPosts( $firstPost );
         $pagesNumber = $this->Pagination->getArticlesCount();
     
         require_once 'view/frontend/listPostsView.php';
@@ -37,11 +38,13 @@ class Frontend {
 
     public function post( $id, $page ) {
 
-        $this->Pagination->setPostView( $this->postView );
-        $this->CommentManager->setPostView( $this->postView );
+        $this->Pagination->setMaxView( $this->postView );
+        $this->CommentManager->setMaxView( $this->postView );
         
+        $firstPost = ( $page * $this->postView ) - $this->postView;
+
         $post = $this->PostManager->getPost( $id );
-        $comments = $this->CommentManager->getComments( $id, $page );
+        $comments = $this->CommentManager->getComments( $id, $firstPost );
         $pagesNumber = $this->Pagination->getCommentsCount( $id) ;
     
         require_once 'view/frontend/postView.php';

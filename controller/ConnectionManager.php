@@ -10,6 +10,7 @@ class ConnectionManager {
 
 
     public function __construct() {
+        session_start();
         $this->login = ( isset($_POST['login']) && !empty($_POST['login']) ) ? htmlentities($_POST['login'], ENT_QUOTES ) : '';
         $this->psswrd = ( isset($_POST['password']) && !empty($_POST['password']) ) ? htmlentities($_POST['password'], ENT_QUOTES ) : '';
         $this->UserManager = new UserManager();
@@ -27,12 +28,9 @@ class ConnectionManager {
                 throw new Exception('Le login ou le mot de passe sont incorrecte');
             }
 
-            session_start();
-            $_SESSION[ 'id' ] = $id;
-            $_SESSION[ 'pseudo' ] = $this->login;
-            $_SESSION[ 'isAdmin' ] = ( $isAdmin ) ? true : false;
-
-            var_dump( $_SESSION['isAdmin'] );
+            $_SESSION['id'] = $id;
+            $_SESSION['pseudo'] = $this->login;
+            $_SESSION['isAdmin'] = ( $isAdmin ) ? true : false;
 
             setcookie( 'pseudo', $this->login, time() + 3600, null, null, false, true );
             setcookie( 'password', $psswrdSaved, time() + 3600, null, null, false, true );
@@ -48,17 +46,15 @@ class ConnectionManager {
 
     public function disconnection() {
         try {
-            session_start();
-            if ( (!isset( $_SESSION['id'])) || (empty( $_SESSION['id'])) ) {
+            if (( !isset( $_SESSION['id'] )) || ( empty( $_SESSION['id'] ) )) {
                 throw new Exception('Vous n\'êtes pas connecté');
             }
-
-            if ( (!isset( $_SESSION['disconnect'])) && ( $_SESSION['id'] >= 0 ) ) {
-                $_SESSION['disconnect'] = '';
-                require_once 'view/backend/disconnectionView.php';
-            }
-            elseif ( isset( $_SESSION['disconnect'] )) {
+            
+            if ( isset( $_POST['disconnect'] )) {
                 $this->disconnectUser();
+
+            } elseif ( isset( $_SESSION['id'] ) && ( !isset( $_POST['submit'] ) )) {
+                require_once 'view/backend/disconnectionView.php';
             }
         }
         catch(Exception $e) {

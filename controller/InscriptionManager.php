@@ -11,27 +11,25 @@ class InscriptionManager {
     private $UserManager = '';
     
     public function __construct() {
-        $this->pseudo = ( isset($_POST['pseudo']) && !empty($_POST['pseudo']) ) ? htmlentities($_POST['pseudo'], ENT_QUOTES ) : '';
-        $this->password = ( isset($_POST['password']) && !empty($_POST['password']) ) ? htmlentities($_POST['password'], ENT_QUOTES ) : '';
-        $this->passwordCheck = ( isset($_POST['passwordCheck']) && !empty($_POST['passwordCheck']) ) ? htmlentities($_POST['passwordCheck'], ENT_QUOTES ) : '';
+        $this->pseudo = ( isset( $_POST['pseudo']) && !empty($_POST['pseudo']) ) ? htmlentities( $_POST['pseudo'], ENT_QUOTES ) : '';
+        $this->password = ( isset( $_POST['password']) && !empty($_POST['password']) ) ? htmlentities( $_POST['password'], ENT_QUOTES ) : '';
+        $this->passwordCheck = ( isset( $_POST['passwordCheck']) && !empty( $_POST['passwordCheck']) ) ? htmlentities( $_POST['passwordCheck'], ENT_QUOTES ) : '';
         $this->UserManager = new UserManager();
     }
 
 
-    private function checkVariables() {
+    public function addUser() {
         try {
-            if ( $this->pseudo === '' ) {
-                throw new Exception('Veuillez saisir un pseudo');
-            }
+            if ( $this->userExist() === false ) {
+                $this->passwordHash = password_hash( $this->password, PASSWORD_DEFAULT );
+                $result = $this->UserManager->addUser( $this->pseudo, $this->passwordHash);
 
-            if ( $this->password === '' ) {
-                throw new Exception('Veuillez saisir un mot de passe');
+                if ( $result === true ) {
+                    require_once 'view/backend/validInscriptionView.php';
+                } else {
+                    throw new Exception( 'L\'ajout d\'utilisateur a échoué' );
+                }
             }
-
-            if ( $this->passwordCheck != $this->password ) {
-                throw new Exception('Les mots de passe sont différents');
-            }
-            return true;
         }
         catch(Exception $e) {
             $errorMessage = $e->getMessage();
@@ -45,7 +43,7 @@ class InscriptionManager {
             if ( $this->checkVariables() ) {
                 $result = $this->UserManager->getUserId( $this->pseudo );
 
-                if ( is_int($result )) {
+                if ( $result ) {
                     throw new Exception('L\'utilisateur existe déjà');
                 } else {
                     return false;
@@ -58,19 +56,24 @@ class InscriptionManager {
         }
     }
 
-
-    public function addUser() {
+    
+    private function checkVariables() {
         try {
-            if ( $this->userExist() === false ) {
-                $this->passwordHash = password_hash( $this->password, PASSWORD_DEFAULT );
-                $result = $this->UserManager->addUser( $this->pseudo, $this->passwordHash);
-
-                if ( $result === true ) {
-                    require_once 'view/backend/validInscriptionView.php';
-                } else {
-                    throw new Exception( 'L\'ajout d\'utilisateur à échoué' );
-                }
+            if ( $this->pseudo === '' ) {
+                throw new Exception('Veuillez saisir un pseudo');
             }
+
+            if ( $this->password === '' ) {
+                throw new Exception('Veuillez saisir un mot de passe');
+            }
+
+            if ( $this->passwordCheck != $this->password ) {
+                throw new Exception('Les mots de passe sont différents');
+            }
+
+            strval( $this->pseudo );
+
+            return true;
         }
         catch(Exception $e) {
             $errorMessage = $e->getMessage();

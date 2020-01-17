@@ -18,7 +18,7 @@ $header = ob_get_clean();
 
 
 ob_start(); ?>
-
+<br>
 <div id="commentsList">Liste des commentaires signalés non modérés:</div>
 
 <?php
@@ -33,7 +33,7 @@ for ( $i = $firstComment; $i < $commentsCount ; $i++ ) { ?>
             <br>
             <em>signalé le <?= $commentsArr[ $i ][ 'report_date' ]; ?></em>
             <br>
-            <em>par <?= $commentsArr[ $i ][ 'pseudo' ]; ?></em>
+            <em>par <?= htmlspecialchars( $commentsArr[ $i ][ 'pseudo' ]); ?></em>
         </h3>
         
         <p>

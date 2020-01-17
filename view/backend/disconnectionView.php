@@ -1,27 +1,23 @@
 <?php
-
 ob_start();
 
-if ( isset( $_SESSION['disconnect'] )) {
-    ?>
+if ( isset( $_SESSION['id'] )) { ?>
     <div>
         <form action="index.php?action=disconnection" method="post">
         Confirmez-vous la demande de déconnexion?
         <br />
-        <input type="submit" name="submit" value="Oui">
+        <input type="submit" name="disconnect" value="Oui">
         </form>
     </div>
-    <?php
+<?php
 }
-else {
-    ?>
+else { ?>
     <div>
         Vous êtes maintenant déconnecté
     </div>
-    <?php 
+<?php 
 }
 
 $content = ob_get_clean();
 
 require_once 'view/backend/disconnectionTemplate.php';
-?>

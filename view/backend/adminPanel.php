@@ -18,7 +18,7 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
     
     <section id="links">
 
-        <a href="index.php?action=newPost">Nouveau billet</a>
+        <a href="index.php?action=newPost">Nouveau billet</a> --- 
         <a href="index.php?action=commentsModeration">Modération des commentaires</a>
         
     </section>
