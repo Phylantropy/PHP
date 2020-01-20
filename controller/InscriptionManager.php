@@ -33,7 +33,7 @@ class InscriptionManager {
         }
         catch(Exception $e) {
             $errorMessage = $e->getMessage();
-            require_once 'view/errorView.php';
+            require_once 'view/backend/inscriptionView.php';
         }
     }
 
@@ -52,7 +52,7 @@ class InscriptionManager {
         }
         catch(Exception $e) {
             $errorMessage = $e->getMessage();
-            require_once 'view/errorView.php';
+            require_once 'view/backend/inscriptionView.php';
         }
     }
 
@@ -77,7 +77,7 @@ class InscriptionManager {
         }
         catch(Exception $e) {
             $errorMessage = $e->getMessage();
-            require_once 'view/errorView.php';
+            require_once 'view/backend/inscriptionView.php';
         }
     }
 }

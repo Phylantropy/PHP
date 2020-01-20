@@ -28,7 +28,7 @@ ob_start();
             <p>
                 <?= nl2br( htmlspecialchars ($data['content'] )); ?>
                 <br />
-                <em><a href="index.php?action=post&amp;id=<?= $data['id']; ?>&amp;page=1">Commentaires</a></em>
+                <em><a href="index.php?action=postView&amp;id=<?= $data['id']; ?>&amp;page=1">Commentaires</a></em>
                 <br />
                 id: <?= $data['id']; ?>
             </p>

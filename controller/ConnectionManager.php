@@ -10,7 +10,6 @@ class ConnectionManager {
 
 
     public function __construct() {
-        session_start();
         $this->login = ( isset($_POST['login']) && !empty($_POST['login']) ) ? htmlentities($_POST['login'], ENT_QUOTES ) : '';
         $this->psswrd = ( isset($_POST['password']) && !empty($_POST['password']) ) ? htmlentities($_POST['password'], ENT_QUOTES ) : '';
         $this->UserManager = new UserManager();
@@ -39,7 +38,7 @@ class ConnectionManager {
         }
         catch(Exception $e) {
             $errorMessage = $e->getMessage();
-            require_once 'view/errorView.php';
+            require_once 'view/backend/connectionView.php';
         }
     }
 

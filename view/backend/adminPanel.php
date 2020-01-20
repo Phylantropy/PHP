@@ -18,7 +18,7 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
     
     <section id="links">
 
-        <a href="index.php?action=newPost">Nouveau billet</a> --- 
+        <a href="index.php?action=newPostPanel">Nouveau billet</a> --- 
         <a href="index.php?action=commentsModeration">Modération des commentaires</a>
         
     </section>
@@ -40,7 +40,7 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconn
         <p>
             <?= nl2br( htmlspecialchars( $data['content'] )); ?>
             <br />
-            <em><a href="index.php?action=post&amp;id=<?= $data[ 'id' ]; ?>&amp;page=1">Commentaires</a></em>
+            <em><a href="index.php?action=postView&amp;id=<?= $data[ 'id' ]; ?>&amp;page=1">Commentaires</a></em>
             <br />
             id: <?= $data['id']; ?>
             <br />

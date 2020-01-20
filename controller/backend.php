@@ -14,7 +14,6 @@ class Backend {
 
 
     public function __construct() {
-        session_start();
         $this->isAdmin = ( isset( $_SESSION[ 'isAdmin' ] ) && !empty( $_SESSION[ 'isAdmin' ] )) ?  $_SESSION[ 'isAdmin' ] : false;
         $this->page = ( isset( $_GET[ 'page' ] ) && !empty( $_GET[ 'page' ] )) ? intval( $_GET['page'] ) : 1;
         $this->PostManager = new PostManager();
@@ -88,8 +87,8 @@ class Backend {
             $post = $this->PostManager->getPost( $postId );
             $post = $post['content'];
 
-            $this->PostManager->setPostView( $this->listPostsView );
-            $this->Pagination->setPostView( $this->listPostsView );
+            $this->PostManager->setMaxView( $this->listPostsView );
+            $this->Pagination->setMaxView( $this->listPostsView );
 
             $posts = $this->PostManager->getPosts( $this->page );
             $pagesNumber = $this->Pagination->getArticlesCount();
