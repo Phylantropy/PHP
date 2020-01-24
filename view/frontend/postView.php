@@ -1,82 +1,85 @@
-<?php $title = htmlspecialchars($post['title']);
+<?php
 
-$connectionCSS = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'disconnection' ) : htmlspecialchars( 'connectionView' );
-$connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconnecter' ) : htmlspecialchars( 'Se connecter' );
+$title = htmlspecialchars( $post['title'] );
 
-?>
+$connectionCSS = ( isset( $_COOKIE['pseudo']) ) ? 'disconnection' : 'connectionView';
+$connectionText = ( isset( $_COOKIE['pseudo']) ) ? 'Se déconnecter' : 'Se connecter';
 
-<?php ob_start(); ?>
+$notice = 'Commentaires du billet:';
 
-    <div id="h1">
-        <h1>Mon blog</h1>
-    </div>
 
-    <p><a href="index.php">Retour à la liste des billets</a></p>
+ob_start(); ?>
+
+    <a href="index.php">Accueil</a>
     
-<?php $header = ob_get_clean(); ?>
+<?php $home = ob_get_clean();
 
 
-<?php ob_start(); ?>
-    <div class="news">
+ob_start(); ?>
+    <article class="news">
         <h3>
-            <?= htmlspecialchars($post['title']) ?>
-            <em>le <?= $post['creation_date_fr'] ?></em>
+            <?= htmlspecialchars( $post[ 'title' ] ) ?>
         </h3>
 
-        <p>
-            <?= nl2br(htmlspecialchars($post['content'])) ?>
-        </p>
-    </div>
+        <div id="creationDate">
+            le <?= $post[ 'creation_date_fr' ] ?>
+        </div>
 
-    <h2>Commentaires</h2>
+        <p>
+            <?= nl2br(htmlspecialchars( $post[ 'content' ] )) ?>
+        </p>
+    </article>
+
+    <h2>Commentaires:</h2>
 
     <?php
-    while ($comment = $comments->fetch() ) {
-    ?>
-        <div class="commentaires">
-            <p class="firstP"><strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?></p>
-            <p><?= nl2br(htmlspecialchars($comment['content'])) ?></p>
+    while ($comment = $comments->fetch() ) { ?>
+        <div class="comments">
+            <div class="commentTitle">
+                <div class="commentAuthor"><?= htmlspecialchars( $comment['author']) ?></div><div class="commentDate"> le <?= $comment['comment_date_fr'] ?></div>
+            </div>
+            <p><?= nl2br(htmlspecialchars( $comment['content'])) ?></p>
 
             <?php
             if ( isset( $_COOKIE['pseudo'] ) && !empty( $_COOKIE['pseudo'] )) { ?>
-                <p><a href="index.php?action=reportComment&amp;commentId=<?= $comment['id'] ?>&amp;user=<?= $_COOKIE['pseudo'] ?>">Signaler</a></p>
+                <a href="index.php?action=reportComment&amp;commentId=<?= $comment['id'] ?>&amp;user=<?= $_COOKIE['pseudo'] ?>">Signaler</a>
             <?php
             }
             ?>
-
         </div>
     <?php
-    }
+    } ?>
 
+    </section>
+
+    <?php
     if ( isset( $_SESSION['pseudo']) && !empty( $_SESSION['pseudo']) && isset($_COOKIE['pseudo']) ) { ?>
-        <h3>Ajouter un commentaire</h3>
+        <section id="newComment">
+            <h3>Ajouter un commentaire</h3>
 
-        <form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
-            <div>
-                <label for="comment">Commentaire</label><br />
+            <form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
+                
+                <label for="comment">Nouveau commentaire:</label>
                 <textarea id="comment" name="comment"></textarea>
-            </div>
-            <div>
                 <input type="submit" />
-            </div>
-        </form>
+
+            </form>
+        </section>
         <?php
     }
 
-    $content = ob_get_clean(); ?>
+$content = ob_get_clean();
 
 
-<?php
 ob_start();
 
-foreach ($pagesNumber as $value) {
-?>
+foreach ($pagesNumber as $value) { ?>
     <a href="index.php?action=postView&amp;id=<?= $post['id']; ?>&amp;page=<?= $value ?>"><?= $value ?></a>
 <?php
 }
-unset($value);
-?>
-<?php $pages = ob_get_clean(); ?>
+
+unset( $value );
+$pages = ob_get_clean();
 
 
-<?php require_once 'view/frontend/template.php'; ?>
+require_once 'view/frontend/template.php';

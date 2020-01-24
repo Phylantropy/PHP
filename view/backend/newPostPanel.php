@@ -1,80 +1,68 @@
-<?php $title = 'Blog écrivain';
+<?php
 
-$connectionCSS = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'disconnection' ) : htmlspecialchars( 'connectionView' );
-$connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconnecter' ) : htmlspecialchars( 'Se connecter' );
+$title = 'Blog écrivain';
 
-?>
+$connectionCSS = ( isset( $_COOKIE['pseudo']) ) ? 'disconnection' : 'connectionView';
+$connectionText = ( isset( $_COOKIE['pseudo']) ) ? 'Se déconnecter' : 'Se connecter';
 
-<?php ob_start(); ?>
-
-    <div id="h1">
-        <h1>Administration</h1>
-    </div>
-
-    <a href="index.php?action=administration">Accueil administration</a>
-
-<?php $header = ob_get_clean(); ?>
+$notice = 'Nouveau billet:';
 
 
-<?php ob_start(); ?>
+ob_start(); ?>
+
+    <a href="index.php?action=administration">Panneau administration</a>
+    <a href="index.php?action=commentsModeration">Modération des commentaires</a>
+
+<?php
+$adminShortcuts = ob_get_clean();
+
+
+ob_start(); ?>
     
     <section id="editor">
-
-        <h2>Nouveau billet</h2>
-
+        
         <form action="index.php?action=addPost" method="post">
             Titre: <input type="text" name="title"/>
-            <br>
-            <br>
             <textarea id="mytextarea" name="mytextarea"></textarea>
-            <br>
             <input type="submit" value="Publier"/>
         </form>
 
     </section>
 
-    <div id="postAnnonce">Dernier billet publié:</div>
-    
-    <?php
-    while ( $data = $posts->fetch() ) {
-    ?>
-
-    <div class="news">
-
-        <h3>
-            <?= htmlspecialchars( $data['title'] ); ?>
-            <br>
-            <em>le <?= $data['date_creation_fr']; ?></em>
-        </h3>
-        
-        <p>
-            <?= nl2br( htmlspecialchars( $data['content'] )); ?>
-            <br>
-            <em><a href="index.php?action=post&amp;id=<?= $data[ 'id' ]; ?>&amp;page=1">Commentaires</a></em>
-            <br>
-            id: <?= $data['id']; ?>
-            <br>
-            <a href="index.php?action=editPost&amp;postId=<?= $data[ 'id' ] ?>">Editer</a>
-        </p>
-    </div>
-
-    <?php
-    }
-    $posts->closeCursor();
-    ?>
-
-<?php $content = ob_get_clean(); ?>
+    <h2>Liste des billets:</h2>
 
 <?php
+while ( $data = $posts->fetch() ) { ?>
+
+    <article class="news">
+        <h3>
+            <?= htmlspecialchars( $data['title'] ); ?>
+        </h3>
+        
+        <div id="creationDate">
+            <span>le <?= $data['date_creation_fr']; ?></span>
+        </div>
+        
+        <p>
+            <?= nl2br( htmlspecialchars ($data['content'] )); ?>
+        </p>
+
+        <a class="commentsLink" href="index.php?action=postView&amp;id=<?= $data['id']; ?>&amp;page=1">Commentaires</a>
+        <a class="editLink" href="index.php?action=editPost&amp;postId=<?= $data['id'] ?>">Editer</a>
+    </article>
+<?php
+}
+$posts->closeCursor();
+$content = ob_get_clean(); 
+
+
 ob_start();
-    foreach ( $pagesNumber as $value ) {
-    ?>
+    foreach ( $pagesNumber as $value ) { ?>
         <a href="index.php?action=administration&amp;page=<?= $value ?>"><?= $value ?></a>
     <?php
     }
-    unset( $value );
-    ?>
-<?php $pages = ob_get_clean(); ?>
+unset( $value );
+$pages = ob_get_clean();
 
 
-<?php require_once 'view/backend/template.php'; ?>
+require_once 'view/backend/template.php';

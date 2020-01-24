@@ -7,8 +7,13 @@
     </head>
 
     <body>
-        <p> Félicitation, vous êtes maintenant inscrit!</p>
-        <br />
-        <p><a href="index.php">Retour à la liste des billets</a></p>
+        <section>
+            <h2>Félicitation, vous êtes maintenant inscrit!</h2>
+        </section>
+
+        <nav>
+            <a href="index.php">Retour à la liste des billets</a>
+        </nav>
+
     </body>
 </html>

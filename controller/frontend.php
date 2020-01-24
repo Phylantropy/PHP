@@ -1,9 +1,5 @@
 <?php
 
-require_once 'model/PostManager.php';
-require_once 'model/CommentManager.php';
-require_once 'model/Pagination.php';
-
 class Frontend {
 
     private $listPostsView = 3;

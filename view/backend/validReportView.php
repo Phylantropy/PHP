@@ -7,8 +7,14 @@
     </head>
 
     <body>
-        <p>Merci pour votre signalement.</p>
-        <br />
-        <p><a href="index.php">Retour à la liste des billets</a></p>
+    
+        <section>
+            <h2>Merci pour votre signalement.</h2>
+        </section>
+
+        <nav>
+            <a href="index.php">Accueil</a>
+        </nav>
+
     </body>
 </html>

@@ -11,9 +11,13 @@
             <h1>Page de déconnexion</h1>
         </header>
 
-        <p><a href="index.php">Retour à la liste des billets</a></p>
+        <nav>
+            <a href="index.php">Accueil</a>
+        </nav>
 
-        <?= $content ?>
-        
+        <div id="disconnexion">
+            <?= $content ?>
+        </div>
+
     </body>
 </html>

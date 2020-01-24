@@ -5,6 +5,7 @@ require_once 'controller/Frontend.php';
 require_once 'controller/InscriptionManager.php';
 require_once 'controller/ConnectionManager.php';
 
+
 class Router {
 
     private $Backend = '';

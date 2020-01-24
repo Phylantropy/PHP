@@ -41,10 +41,12 @@ class PostManager extends Manager {
     }
 
     
-    public function updatePost( $post, $postId ) {
+    public function updatePost( $title, $post, $postId ) {
         $db = $this->dbConnect();
-        $req = $db->prepare( 'UPDATE articles SET content = ? WHERE id = ?' );
-        $result = $req->execute( array( $post, $postId ));
+        $req = $db->prepare( 'UPDATE articles
+            SET title = ?, content = ?
+            WHERE id = ?' );
+        $result = $req->execute( array( $title, $post, $postId ));
         
         return $result;
     }

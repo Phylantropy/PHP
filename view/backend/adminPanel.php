@@ -1,70 +1,53 @@
-<?php $title = 'Blog écrivain';
+<?php
 
-$connectionCSS = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'disconnection' ) : htmlspecialchars( 'connectionView' );
-$connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconnecter' ) : htmlspecialchars( 'Se connecter' );
+$title = 'Blog de Jean Forteroche';
 
-?>
+$connectionCSS = ( isset( $_COOKIE['pseudo']) ) ? 'disconnection' : 'connectionView';
+$connectionText = ( isset( $_COOKIE['pseudo']) ) ? 'Se déconnecter' : 'Se connecter';
 
-<?php ob_start(); ?>
+$notice = 'Voici les derniers billets du blog :';
 
-    <div id="h1">
-        <h1>Administration</h1>
-    </div>
+ob_start(); ?>
 
-<?php $header = ob_get_clean(); ?>
+    <a href="index.php?action=newPostPanel">Nouveau billet</a>
+    <a href="index.php?action=commentsModeration">Modération des commentaires</a>
+
+<?php
+$adminShortcuts = ob_get_clean();
 
 
-<?php ob_start(); ?>
-    
-    <section id="links">
+ob_start();
 
-        <a href="index.php?action=newPostPanel">Nouveau billet</a> --- 
-        <a href="index.php?action=commentsModeration">Modération des commentaires</a>
-        
-    </section>
+    while ( $data = $posts->fetch() ) { ?>
+        <article class="news">
+            <h3>
+                <?= htmlspecialchars( $data['title'] ); ?>
+            </h3>
+            
+            <div id="creationDate">
+                <span>le <?= $data['date_creation_fr']; ?></span>
+            </div>
+            
+            <p>
+                <?= nl2br( htmlspecialchars ($data['content'] )); ?>
+            </p>
 
-    <div id="postAnnonce">Billets publiés:</div>
-
-    <?php
-    while ( $data = $posts->fetch() ) {
-    ?>
-
-    <div class="news">
-
-        <h3>
-            <?= htmlspecialchars( $data['title'] ); ?>
-            <br />
-            <em>le <?= $data['date_creation_fr']; ?></em>
-        </h3>
-        
-        <p>
-            <?= nl2br( htmlspecialchars( $data['content'] )); ?>
-            <br />
-            <em><a href="index.php?action=postView&amp;id=<?= $data[ 'id' ]; ?>&amp;page=1">Commentaires</a></em>
-            <br />
-            id: <?= $data['id']; ?>
-            <br />
-            <a href="index.php?action=editPost&amp;postId=<?= $data[ 'id' ] ?>">Editer</a>
-        </p>
-    </div>
-
+            <a class="commentsLink" href="index.php?action=postView&amp;id=<?= $data['id']; ?>&amp;page=1">Commentaires</a>
+            <a class="editLink"href="index.php?action=editPost&amp;postId=<?= $data['id'] ?>">Editer</a>
+        </article>
     <?php
     }
     $posts->closeCursor();
-    ?>
+$content = ob_get_clean();
 
-<?php $content = ob_get_clean(); ?>
 
-<?php
 ob_start();
-    foreach ( $pagesNumber as $value ) {
-    ?>
+    foreach ( $pagesNumber as $value ) { ?>
         <a href="index.php?action=administration&amp;page=<?= $value ?>"><?= $value ?></a>
     <?php
     }
     unset( $value );
-    ?>
-<?php $pages = ob_get_clean(); ?>
+$pages = ob_get_clean();
 
 
-<?php require_once 'view/backend/template.php'; ?>
+require_once 'view/backend/template.php';

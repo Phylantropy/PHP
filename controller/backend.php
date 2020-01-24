@@ -1,5 +1,9 @@
 <?php
 
+require_once 'model/PostManager.php';
+require_once 'model/CommentManager.php';
+require_once 'model/Pagination.php';
+
 class Backend {
 
     private $listPostsView = 5;
@@ -23,16 +27,30 @@ class Backend {
     }
 
 
+    private function listPosts() {
+        $this->PostManager->setMaxView( $this->listPostsView );
+        $this->Pagination->setMaxView( $this->listPostsView );
+
+        $firstPost = ( $this->page * $this->listPostsView ) - $this->listPostsView;
+        
+        $posts = $this->PostManager->getPosts( $firstPost );
+        $pagesNumber = $this->Pagination->getArticlesCount();
+
+        if ( func_num_args() === 3 ) {
+            $postId = func_get_arg(1);
+            $post = func_get_arg(2);
+        }
+
+        require_once func_get_arg(0);
+    }
+
+
     public function adminPanel() {
         if ( $this->isAdmin === true ) {
-        
-            $this->PostManager->setMaxView( $this->listPostsView );
-            $posts = $this->PostManager->getPosts( $this->page );
 
-            $this->Pagination->setMaxView( $this->listPostsView );
-            $pagesNumber = $this->Pagination->getArticlesCount();
+            $view = 'view/backend/adminPanel.php';
 
-            require_once 'view/backend/adminPanel.php';
+            $this->listPosts( $view );
         }
         else {
             header( 'Location: index.php' );
@@ -42,14 +60,10 @@ class Backend {
     
     public function newPostPanel() {
         if ( $this->isAdmin === true ) {
-        
-            $this->PostManager->setMaxView( $this->listPostsView );
-            $posts = $this->PostManager->getPosts( $this->page );
 
-            $this->Pagination->setMaxView( $this->listPostsView );
-            $pagesNumber = $this->Pagination->getArticlesCount();
+            $view = 'view/backend/newPostPanel.php';
 
-            require_once 'view/backend/newPostPanel.php';
+            $this->listPosts( $view );
         }
         else {
             header( 'Location: index.php' );
@@ -85,15 +99,9 @@ class Backend {
 
             $postId = $_GET[ 'postId' ];
             $post = $this->PostManager->getPost( $postId );
-            $post = $post['content'];
+            $view = 'view/backend/editPanel.php';
 
-            $this->PostManager->setMaxView( $this->listPostsView );
-            $this->Pagination->setMaxView( $this->listPostsView );
-
-            $posts = $this->PostManager->getPosts( $this->page );
-            $pagesNumber = $this->Pagination->getArticlesCount();
-
-            require_once 'view/backend/editPanel.php';
+            $this->listPosts( $view, $postId, $post );
         }
     }
 
@@ -101,12 +109,12 @@ class Backend {
     public function updatePost() {
         if ( $this->isAdmin === true ) {
 
-            $post = $_POST[ 'mytextarea' ];
             $postId = $_GET[ 'postId' ];
-            $post = strip_tags( $post );
+            $post = strip_tags( $_POST[ 'mytextarea' ] );
+            $title = strip_tags( $_POST[ 'title' ] );
 
-            if ( !empty( $post ) && !empty( $postId ) ) { 
-                $this->PostManager->updatePost( $post, $postId );
+            if ( !empty( $title ) && !empty( $post ) && !empty( $postId ) ) {
+                $this->PostManager->updatePost( $title, $post, $postId );
             }
 
             header( 'Location: index.php?action=administration' );
@@ -144,7 +152,7 @@ class Backend {
 
     public function reportComment() {
         $commentId = intval( $_GET[ 'commentId' ]);
-        $user = $_GET[ 'user' ];
+        $user = strip_tags( $_GET[ 'user' ]);
         $userId = intval( $this->UserManager->getUserId( $user ));
         $result = $this->CommentManager->getReportedComments( $commentId, $userId );
         

@@ -11,7 +11,9 @@
             <h1>Page de connexion</h1>
         </header>
 
-        <p><a href="index.php">Retour à la liste des billets</a></p>
+        <nav>
+            <a href="index.php">Accueil</a>
+        </nav>
 
         <div>
             <form action="index.php?action=connection" method="post">

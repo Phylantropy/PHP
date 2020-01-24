@@ -7,8 +7,12 @@
     </head>
 
     <body>
-        <p><?= $errorMessage ?></p>
-        <br />
-        <a href="index.php">Retourner à l'accueil</a>
+        <section>
+            <h2><?= $errorMessage ?></h2>
+        </section>
+        
+        <nav>
+            <a href="index.php">Accueil</a>
+        </nav>
     </body>
 </html>

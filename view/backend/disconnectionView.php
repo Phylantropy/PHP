@@ -12,9 +12,7 @@ if ( isset( $_SESSION['id'] )) { ?>
 <?php
 }
 else { ?>
-    <div>
-        Vous êtes maintenant déconnecté
-    </div>
+    <p>Vous êtes maintenant déconnecté</p>
 <?php 
 }
 

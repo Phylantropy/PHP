@@ -7,16 +7,19 @@
     </head>
 
     <body>
-        <p>Vous êtes connecté!</p>
-        <br />
-        <p>
+        <nav>
+            <a href="index.php">Aller à l'accueil</a>
         <?php
-            if ( $_SESSION[ 'isAdmin' ] === false ) {
-                echo( '<a href="index.php">Retour à la liste des billets</a>' );
-            } elseif ( $_SESSION[ 'isAdmin' ] === true ) {
-                echo( '<a href="index.php?action=administration">Accueil administration</a>' );
+            if ( $_SESSION[ 'isAdmin' ] === true ) { ?>
+                ou bien, <br>
+                <a href="index.php?action=administration">Aller sur la page d'administration</a>
+            <?php
             }
         ?>
-        </p>
+        </nav>
+
+        <div class="message">
+            <p>Bienvenu <?= $_SESSION['pseudo']?>!</p>
+        </div>
     </body>
 </html>

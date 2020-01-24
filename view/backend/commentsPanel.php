@@ -1,67 +1,63 @@
 <?php
+
 $title = 'Blog écrivain';
 
-$connectionCSS = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'disconnection' ) : htmlspecialchars( 'connectionView' );
-$connectionText = ( isset( $_COOKIE['pseudo']) ) ? htmlspecialchars( 'Se déconnecter' ) : htmlspecialchars( 'Se connecter' );
+$connectionCSS = ( isset( $_COOKIE['pseudo']) ) ? 'disconnection' : 'connectionView';
+$connectionText = ( isset( $_COOKIE['pseudo']) ) ? 'Se déconnecter' : 'Se connecter';
 
-
-ob_start(); ?>
-
-    <div id="h1">
-        <h1>Administration</h1>
-    </div>
-
-    <a href="index.php?action=administration">Accueil administration</a>
-
-<?php
-$header = ob_get_clean();
-
+$notice = 'Liste des commentaires signalés non modérés:';
 
 ob_start(); ?>
-<br>
-<div id="commentsList">Liste des commentaires signalés non modérés:</div>
+
+    <a href="index.php?action=administration">Panneau administration</a>
+    <a href="index.php?action=newPostPanel">Nouveau billet</a>
 
 <?php
+$adminShortcuts = ob_get_clean();
+
+
+ob_start();
+
 for ( $i = $firstComment; $i < $commentsCount ; $i++ ) { ?>
-
-    <div class="news">
-
-        <h3>
-            <em>Auteur du commentaire:</em> <?= htmlspecialchars( $commentsArr[ $i ][ 'author' ] ); ?>
+    <article class="comment">
+        <div class="infosComment">
+            <em>Auteur du commentaire:</em><span> <?= htmlspecialchars( $commentsArr[ $i ][ 'author' ] ); ?></span>
             <br>
-            <em>posté <?= $commentsArr[ $i ][ 'comment_date' ]; ?></em>
+            <span>posté le:</span><em> <?= $commentsArr[ $i ][ 'comment_date' ]; ?></em>
             <br>
-            <em>signalé le <?= $commentsArr[ $i ][ 'report_date' ]; ?></em>
+            <em>signalé le:</em><span> <?= $commentsArr[ $i ][ 'report_date' ]; ?></span>
             <br>
-            <em>par <?= htmlspecialchars( $commentsArr[ $i ][ 'pseudo' ]); ?></em>
-        </h3>
+            <span>par:</span><em> <?= htmlspecialchars( $commentsArr[ $i ][ 'pseudo' ]); ?></em>
+        </div>
         
         <p>
             <?= nl2br( htmlspecialchars( $commentsArr[ $i ][ 'content' ] )); ?>
             <br />
         </p>
 
-        <input type="button" value="Editer" class="editButton"/>
+        <form class="editComment" action="index.php?action=moderateComment&amp;commentId=<?= $commentsArr[ $i ][ 'comment_id' ] ?>" method="post">
 
-        <form action="index.php?action=moderateComment&amp;commentId=<?= $commentsArr[ $i ][ 'comment_id' ] ?>" method="post" class="editComment">
-
-            <textarea class="comment" name="comment"> <?= nl2br( htmlspecialchars( $commentsArr[ $i ][ 'content' ] )); ?></textarea>
-            <input type="submit" value="Modifier"/>
-
+            <textarea class="commentArea" name="comment"> <?= nl2br( htmlspecialchars( $commentsArr[ $i ][ 'content' ] )); ?></textarea>
+            <br>
+            <em>Attention: éditer un commentaire changera son statut comme ayant été modéré.</em>
+            <br>
+            <input type="submit" value="Modifier"/> ou bien annuler la modification:
+            <input type="button" value="Annuler" class="cancelEdit">
         </form>
 
-        <p class="delete-confirmation">
-            Vous êtes sur le point de supprimer ce commentaire.
+        <div class="delete-confirmation">
+            <em>Vous êtes sur le point de supprimer ce commentaire.</em>
             <br />
             Confirmation: <a href="index.php?action=deleteReportedComment&amp;commentId=<?= $commentsArr[ $i ][ 'comment_id' ] ?>"><input type="button" value="Supprimer"></a>
-        </p>
+            ou bien annuler la suppression:
+            <input type="button" value="Annuler" class="cancelDelete">
+        </div>
         
-        <p class="delete-button-P">
-            <input type="button" value="Supprimer" class="delete-button"> 
-        </p>
-
-    </div>
-
+        <div class="inputsComment">
+            <input type="button" value="Editer" class="editButton"/>
+            <input type="button" value="Supprimer" class="delete-button">
+        </div>
+    </article>
 <?php
 }
 unset($data); ?>

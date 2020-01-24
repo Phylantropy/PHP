@@ -1,12 +1,26 @@
-function showDeleteP() {
-    var deleteButton = document.getElementById("delete-confirmation");
-    var deleteButtonP = document.getElementById("delete-button-P");
-    deleteButtonP.style.display = "none";
-    deleteButton.style.display = "block";
+function deleteClick() {
+    editButton.style.display = "none";
+    deleteButton.style.display = "none";
+    deleteConfirmation.style.display = "block";
 }
+
+function cancelDeleteClick() {
+    editButton.style.display = "block";
+    deleteButton.style.display = "block";
+    deleteConfirmation.style.display = "none";
+}
+
 
 function addDeleteEvent() {
-    document.getElementById("delete-button").addEventListener("click", showDeleteP );
+    deleteButton.addEventListener("click", (e) => deleteClick() );
+    cancelDelete.addEventListener( "click", (e) => cancelDeleteClick() );
 }
 
+
+var editButton = document.getElementById("editButton");
+var deleteButton = document.getElementById("delete-button");
+var cancelDelete = document.getElementById("cancelDelete");
+var deleteConfirmation = document.getElementById("delete-confirmation");
+
+//START
 addDeleteEvent();

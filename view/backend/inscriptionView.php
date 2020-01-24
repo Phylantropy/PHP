@@ -7,11 +7,13 @@
     </head>
 
     <body>
-        <header>
-            <h1>Page d'inscription</h1>
-        </header>
+        <section>
+            <h2>Page d'inscription</h2>
+        </section>
 
-        <p><a href="index.php">Retour à la liste des billets</a></p>
+        <nav>
+            <a href="index.php">Accueil</a>
+        </nav>
 
         <div>
             <form action="index.php?action=subscription" method="post">
