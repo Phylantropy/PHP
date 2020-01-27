@@ -16,7 +16,7 @@ ob_start();
                 <?= htmlspecialchars( $data['title'] ); ?>
             </h3>
             
-            <div id="creationDate">
+            <div class="creationDate">
                 <span>le <?= $data['date_creation_fr']; ?></span>
             </div>
             

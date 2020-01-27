@@ -48,11 +48,8 @@ ob_start(); ?>
             ?>
         </div>
     <?php
-    } ?>
-
-    </section>
-
-    <?php
+    } 
+    
     if ( isset( $_SESSION['pseudo']) && !empty( $_SESSION['pseudo']) && isset($_COOKIE['pseudo']) ) { ?>
         <section id="newComment">
             <h3>Ajouter un commentaire</h3>
@@ -65,7 +62,7 @@ ob_start(); ?>
 
             </form>
         </section>
-        <?php
+    <?php
     }
 
 $content = ob_get_clean();
