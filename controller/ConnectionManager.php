@@ -10,8 +10,8 @@ class ConnectionManager {
 
 
     public function __construct() {
-        $this->login = ( isset($_POST['login']) && !empty($_POST['login']) ) ? htmlentities($_POST['login'], ENT_QUOTES ) : '';
-        $this->psswrd = ( isset($_POST['password']) && !empty($_POST['password']) ) ? htmlentities($_POST['password'], ENT_QUOTES ) : '';
+        $this->login = ( isset($_POST['login']) && !empty($_POST['login']) ) ? htmlspecialchars($_POST['login'], ENT_QUOTES ) : '';
+        $this->psswrd = ( isset($_POST['password']) && !empty($_POST['password']) ) ? htmlspecialchars($_POST['password'], ENT_QUOTES ) : '';
         $this->UserManager = new UserManager();
     }
 
@@ -45,7 +45,7 @@ class ConnectionManager {
 
     public function disconnection() {
         try {
-            if (( !isset( $_SESSION['id'] )) || ( empty( $_SESSION['id'] ) )) {
+            if ( ( !isset( $_SESSION['id'] )) || ( empty( $_SESSION['id'] )) && ( !isset( $_COOKIE['pseudo'] )) ) {
                 throw new Exception('Vous n\'êtes pas connecté');
             }
             

@@ -5,18 +5,30 @@ require_once 'model/Manager.php';
 class CommentManager extends Manager {
 
     public function getComments( $postId, $firstPost ) {
-            $db = $this->dbConnect();
-            $comments = $db->prepare( 'SELECT id, author, content, DATE_FORMAT( comment_date, \'%d/%m/%Y à %Hh%i\' ) AS comment_date_fr
-                FROM comments
-                WHERE post_id = ?
-                ORDER BY comment_date
-                DESC LIMIT ?, ?' );
-            $comments->bindParam( 1, $postId, PDO::PARAM_INT );
-            $comments->bindParam( 2, $firstPost, PDO::PARAM_INT );
-            $comments->bindParam( 3, $this->maxView, PDO::PARAM_INT );
-            $comments->execute();
+        $db = $this->dbConnect();
+        $comments = $db->prepare( 'SELECT id, author, content, DATE_FORMAT( comment_date, \'%d/%m/%Y à %Hh%i\' ) AS comment_date_fr
+            FROM comments
+            WHERE post_id = ?
+            ORDER BY comment_date
+            DESC LIMIT ?, ?' );
+        $comments->bindParam( 1, $postId, PDO::PARAM_INT );
+        $comments->bindParam( 2, $firstPost, PDO::PARAM_INT );
+        $comments->bindParam( 3, $this->maxView, PDO::PARAM_INT );
+        $comments->execute();
 
-            return $comments;
+        return $comments;
+    }
+
+    
+    public function getCommentAuthor( $commentId ) {
+        $db = $this->dbConnect();
+        $req = $db->prepare( 'SELECT author
+            FROM comments
+            WHERE id = ?
+            LIMIT 1' );
+        $req->execute( array( $commentId ));
+
+        return $req;
     }
 
 

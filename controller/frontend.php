@@ -20,10 +20,10 @@ class Frontend {
         $this->CommentManager = new CommentManager();
         $this->Pagination = new Pagination();
 
-        $this->id = ( isset( $_GET['id'] ) && !empty( $_GET['id'] )) ? intval( $_GET['id'] ) : 0;
-        $this->page = ( isset( $_GET['page'] ) && !empty( $_GET['page'] )) ? intval( $_GET['page'] ) : 1;
-        $this->author = ( isset( $_COOKIE['pseudo'] ) && !empty( $_COOKIE['pseudo'] )) ? htmlentities( $_COOKIE['pseudo'], ENT_QUOTES ) : '';
-        $this->comment = ( isset( $_POST['comment'] ) && !empty( $_POST['comment'] )) ? htmlentities( $_POST['comment'], ENT_QUOTES ) : '';
+        $this->id = ( isset( $_GET['id'] ) && !empty( $_GET['id'] )) ? htmlspecialchars( intval( $_GET['id'] )) : 0;
+        $this->page = ( isset( $_GET['page'] ) && !empty( $_GET['page'] )) ? htmlspecialchars( intval( $_GET['page'] )) : 1;
+        $this->author = ( isset( $_COOKIE['pseudo'] ) && !empty( $_COOKIE['pseudo'] )) ? htmlspecialchars( $_COOKIE['pseudo'], ENT_QUOTES ) : '';
+        $this->comment = ( isset( $_POST['comment'] ) && !empty( $_POST['comment'] )) ? htmlspecialchars( $_POST['comment'], ENT_QUOTES ) : '';
     }
 
 
@@ -68,7 +68,7 @@ class Frontend {
                 throw new Exception('L\'ajout de commentaire à échoué');
             }
             else {
-                header('Location: index.php?action=post&id=' . $this->id);
+                header('Location: index.php?action=postView&id=' . $this->id);
             }
         }
         catch(Exception $e) {

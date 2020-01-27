@@ -257,3 +257,70 @@ article p {
     display: flex;
     justify-content: space-around;
 }
+
+
+/*------------------------------------------------------*/
+/*------------------- MEDIA QUERIES --------------------*/
+/*------------------------------------------------------*/
+
+@media only screen and (max-width: 600px) {
+
+    h1 {
+        font-size: 1.1em;
+        margin: auto;
+        width: 75%;
+    }
+
+    nav {
+        position: initial;
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
+    }
+
+    header {
+        width: 75%;
+    }
+
+    section {
+        width: 90%;
+    }
+
+    section h2 {
+        font-size: 1em;
+    }
+
+    .news h3 {
+        font-size: 1.5em;
+        width: 90%;
+    }
+
+    .comments {
+        width: 90%;
+    }
+
+    .commentAuthor {
+        font-size: 1em;
+    }
+
+    #newComment h3 {
+        font-size: 1.5em;
+        width: 85%;
+    }
+
+    #newComment form {
+        width: 85%;
+    }
+
+    #adminShortcuts {
+        align-items: center;
+        text-align: center;
+    }
+
+    #pages a {
+        padding: 0 0.4em;
+    }
+}

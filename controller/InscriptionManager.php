@@ -11,9 +11,9 @@ class InscriptionManager {
     private $UserManager = '';
     
     public function __construct() {
-        $this->pseudo = ( isset( $_POST['pseudo']) && !empty($_POST['pseudo']) ) ? htmlentities( $_POST['pseudo'], ENT_QUOTES ) : '';
-        $this->password = ( isset( $_POST['password']) && !empty($_POST['password']) ) ? htmlentities( $_POST['password'], ENT_QUOTES ) : '';
-        $this->passwordCheck = ( isset( $_POST['passwordCheck']) && !empty( $_POST['passwordCheck']) ) ? htmlentities( $_POST['passwordCheck'], ENT_QUOTES ) : '';
+        $this->pseudo = ( isset( $_POST['pseudo']) && !empty($_POST['pseudo']) ) ? htmlspecialchars( $_POST['pseudo'], ENT_QUOTES ) : '';
+        $this->password = ( isset( $_POST['password']) && !empty($_POST['password']) ) ? htmlspecialchars( $_POST['password'], ENT_QUOTES ) : '';
+        $this->passwordCheck = ( isset( $_POST['passwordCheck']) && !empty( $_POST['passwordCheck']) ) ? htmlspecialchars( $_POST['passwordCheck'], ENT_QUOTES ) : '';
         $this->UserManager = new UserManager();
     }
 
