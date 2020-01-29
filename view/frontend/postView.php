@@ -11,8 +11,14 @@ $notice = 'Commentaires du billet:';
 ob_start(); ?>
 
     <a href="index.php">Accueil</a>
+
+    <?php
+    if ( $_SESSION[ 'isAdmin'] === true ) { ?>
+        <a href="index.php?action=administration">Panneau administration</a>
+    <?php
+    }
     
-<?php $home = ob_get_clean();
+$home = ob_get_clean();
 
 
 ob_start(); ?>

@@ -115,7 +115,7 @@ class Backend {
     public function updatePost() {
         if ( $this->isAdmin === true ) {
 
-            $postId = htmlspecialchars( intval( $_GET[ 'postId' ]));
+            $postId = intval( htmlspecialchars( $_GET[ 'postId' ]));
             $post = htmlspecialchars( strip_tags( $_POST[ 'mytextarea' ] ));
             $title = htmlspecialchars( strip_tags( $_POST[ 'title' ] ));
 
@@ -134,8 +134,9 @@ class Backend {
     public function deletePost() {
         if ( $this->isAdmin === true ) {
 
-            $postId = htmlspecialchars( intval( $_GET[ 'postId' ]));
+            $postId = intval( htmlspecialchars( $_GET[ 'postId' ]));
             $this->PostManager->deletePost( $postId );
+            $this->CommentManager->deletePostComment( $postId );
             header( 'Location: index.php?action=administration' );
         }
         else {

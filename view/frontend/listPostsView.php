@@ -8,6 +8,16 @@ $connectionText = ( isset( $_COOKIE['pseudo']) ) ? 'Se déconnecter' : 'Se conne
 $notice = 'Voici les derniers billets du blog :';
 
 
+ob_start();
+
+    if ( $_SESSION[ 'isAdmin'] === true ) { ?>
+        <a href="index.php?action=administration">Panneau administration</a>
+    <?php
+    }
+    
+$home = ob_get_clean();
+
+
 ob_start(); 
 
     while ( $data = $posts->fetch() ) { ?>

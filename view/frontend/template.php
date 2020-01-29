@@ -21,10 +21,7 @@
     } ?>
     <a href="index.php?action=<?= $connectionCSS ?>" id="connexion"><?= $connectionText ?></a>
 
-    <?php
-    if ( isset( $home )) {
-        echo ( $home );
-    } ?>
+    <?= $home ?>
     </nav>
 
 
