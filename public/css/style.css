@@ -252,13 +252,7 @@ article p {
 /*------------------- MEDIA QUERIES --------------------*/
 /*------------------------------------------------------*/
 
-@media only screen and (max-width: 600px) {
-
-    h1 {
-        font-size: 1.1em;
-        margin: auto;
-        width: 75%;
-    }
+@media only screen and (max-width: 950px) {
 
     nav {
         position: initial;
@@ -268,6 +262,17 @@ article p {
         justify-content: space-around;
         align-items: center;
         text-align: center;
+    }
+
+}
+
+
+@media only screen and (max-width: 600px) {
+
+    h1 {
+        font-size: 1.1em;
+        margin: auto;
+        width: 75%;
     }
 
     header {

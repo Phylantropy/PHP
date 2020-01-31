@@ -9,7 +9,7 @@
 
 <body>
     <header>
-        <h1>Bienvenu sur le blog de Jean Forteroche</h1>        
+        <h1>Bienvenue sur le blog de Jean Forteroche</h1>        
     </header>
 
 

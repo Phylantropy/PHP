@@ -136,7 +136,6 @@ class Backend {
 
             $postId = intval( htmlspecialchars( $_GET[ 'postId' ]));
             $this->PostManager->deletePost( $postId );
-            $this->CommentManager->deletePostComment( $postId );
             header( 'Location: index.php?action=administration' );
         }
         else {
